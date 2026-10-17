@@ -70,6 +70,12 @@ class CallActivity : SempliceActivity() {
         setContent { SempliceTheme { CallScreen(onFinished = { finish() }) } }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // La schermata è visibile: il banner della notifica sarebbe solo un doppione.
+        IncomingCallNotification.cancel(this)
+    }
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         handleAction(intent)

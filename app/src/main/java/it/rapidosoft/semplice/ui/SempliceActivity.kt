@@ -12,6 +12,23 @@ open class SempliceActivity : AppCompatActivity() {
     /** La schermata di chiamata resta accesa a prescindere dalla preferenza. */
     protected open val alwaysKeepScreenOn = false
 
+    override fun onResume() {
+        super.onResume()
+        resumed++
+    }
+
+    override fun onPause() {
+        resumed--
+        super.onPause()
+    }
+
+    companion object {
+        private var resumed = 0
+
+        /** Una nostra schermata è in primo piano: possiamo aprire activity senza notifica. */
+        val inForeground: Boolean get() = resumed > 0
+    }
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         // tastiera, dialoghi e swipe possono farla ricomparire: la rinascondiamo

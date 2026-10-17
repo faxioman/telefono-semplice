@@ -11,6 +11,7 @@ import it.rapidosoft.semplice.CallActivity
 import it.rapidosoft.semplice.data.CallFilter
 import it.rapidosoft.semplice.data.LogType
 import it.rapidosoft.semplice.data.Store
+import it.rapidosoft.semplice.ui.SempliceActivity
 
 /** Il sistema si collega a questo servizio perché siamo l'app Telefono predefinita. */
 class PhoneInCallService : InCallService() {
@@ -35,7 +36,9 @@ class PhoneInCallService : InCallService() {
             incomingCalls.add(call)
         }
         CallManager.add(call)
-        if (incoming) IncomingCallNotification.show(this, call)
+        // Con l'app in primo piano basta aprire la schermata di chiamata. Altrimenti (telefono
+        // bloccato, altra app davanti) serve la notifica a schermo intero: è lei ad aprirla.
+        if (incoming && !SempliceActivity.inForeground) IncomingCallNotification.show(this, call)
         runCatching { startActivity(CallActivity.intent(this)) }
         CallManager.enforceSpeaker()
     }
