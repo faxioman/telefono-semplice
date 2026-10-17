@@ -1,5 +1,7 @@
 # Telefono Semplice
 
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-%E2%98%95-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/faxioman)
+
 App Android pensata per persone anziane con demenza: **sostituisce sia la schermata Home sia l'app Telefono** del dispositivo.
 
 ## Funzioni
@@ -69,4 +71,4 @@ Le stringhe si rigenerano con `python3 tools_gen_strings.py` (le traduzioni sono
 
 ---
 
-Fatto con ❤️ e con Claude Opus 5.5 a sforzo **medio**. Sì, medio: il massimo lo teniamo per quando la nonna chiederà le videochiamate.
+Fatto con ❤️ (e qualche [caffè](https://buymeacoffee.com/faxioman)) e con Claude Opus 5.5 a sforzo **medio**. Sì, medio: il massimo lo teniamo per quando la nonna chiederà le videochiamate.

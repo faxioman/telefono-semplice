@@ -97,4 +97,5 @@
     <string name="contact_add_manual">Manuell hinzufügen</string>
     <string name="pref_wake_on_power">Ein-/Aus-Taste ignorieren</string>
     <string name="pref_wake_on_power_hint">Wird die Ein-/Aus-Taste gedrückt, schaltet sich der Bildschirm von selbst wieder ein. Langes Drücken schaltet das Telefon weiterhin aus.</string>
+    <string name="buy_coffee">☕ Spendier mir einen Kaffee</string>
 </resources>

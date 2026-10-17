@@ -298,6 +298,19 @@ T["ar"] += ["تجاهل زر التشغيل", "عند الضغط على زر ا�
 T["hi"] += ["पावर बटन को अनदेखा करें", "पावर बटन दबाने पर स्क्रीन अपने-आप फिर चालू हो जाएगी। बटन देर तक दबाकर फ़ोन फिर भी बंद किया जा सकता है।"]
 T["zh"] += ["忽略电源键", "按下电源键后屏幕会自动重新亮起。长按电源键仍可关机。"]
 
+# --- v0.5: donazioni
+KEYS += ["buy_coffee"]
+T[""] += ["☕ Buy me a coffee"]
+T["it"] += ["☕ Offrimi un caffè"]
+T["es"] += ["☕ Invítame a un café"]
+T["fr"] += ["☕ Offre-moi un café"]
+T["de"] += ["☕ Spendier mir einen Kaffee"]
+T["pt"] += ["☕ Paga-me um café"]
+T["ru"] += ["☕ Угостить меня кофе"]
+T["ar"] += ["☕ اشترِ لي قهوة"]
+T["hi"] += ["☕ मुझे एक कॉफ़ी पिलाएँ"]
+T["zh"] += ["☕ 请我喝杯咖啡"]
+
 def esc(s):
     s = escape(s).replace("'", "\\'").replace('"', '\\"').replace("\n", "\\n")
     if s.startswith("@") or s.startswith("?"): s = "\\" + s

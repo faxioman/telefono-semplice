@@ -97,4 +97,5 @@
     <string name="contact_add_manual">Adicionar manualmente</string>
     <string name="pref_wake_on_power">Ignorar o botão de ligar</string>
     <string name="pref_wake_on_power_hint">Se o botão de ligar for premido, o ecrã volta a acender-se sozinho. Mantendo-o premido continua a ser possível desligar o telefone.</string>
+    <string name="buy_coffee">☕ Paga-me um café</string>
 </resources>
