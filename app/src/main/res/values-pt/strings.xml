@@ -98,4 +98,8 @@
     <string name="pref_wake_on_power">Ignorar o botão de ligar</string>
     <string name="pref_wake_on_power_hint">Se o botão de ligar for premido, o ecrã volta a acender-se sozinho. Mantendo-o premido continua a ser possível desligar o telefone.</string>
     <string name="buy_coffee">☕ Paga-me um café</string>
+    <string name="number_add_from_book">Da agenda</string>
+    <string name="photo_adjust">Ajustar a foto</string>
+    <string name="crop_hint">Arraste para mover a foto e use dois dedos para ampliar ou reduzir.</string>
+    <string name="crop_use">Usar esta foto</string>
 </resources>

@@ -98,4 +98,8 @@
     <string name="pref_wake_on_power">पावर बटन को अनदेखा करें</string>
     <string name="pref_wake_on_power_hint">पावर बटन दबाने पर स्क्रीन अपने-आप फिर चालू हो जाएगी। बटन देर तक दबाकर फ़ोन फिर भी बंद किया जा सकता है।</string>
     <string name="buy_coffee">☕ मुझे एक कॉफ़ी पिलाएँ</string>
+    <string name="number_add_from_book">फ़ोन बुक से</string>
+    <string name="photo_adjust">फ़ोटो ठीक करें</string>
+    <string name="crop_hint">फ़ोटो खिसकाने के लिए खींचें, बड़ा या छोटा करने के लिए दो उँगलियों से पिंच करें।</string>
+    <string name="crop_use">यह फ़ोटो लगाएँ</string>
 </resources>

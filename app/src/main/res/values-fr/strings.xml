@@ -98,4 +98,8 @@
     <string name="pref_wake_on_power">Ignorer le bouton marche/arrêt</string>
     <string name="pref_wake_on_power_hint">Si le bouton marche/arrêt est pressé, l\'écran se rallume tout seul. Un appui long permet toujours d\'éteindre le téléphone.</string>
     <string name="buy_coffee">☕ Offre-moi un café</string>
+    <string name="number_add_from_book">Depuis le répertoire</string>
+    <string name="photo_adjust">Ajuster la photo</string>
+    <string name="crop_hint">Faites glisser pour déplacer la photo, pincez à deux doigts pour zoomer ou dézoomer.</string>
+    <string name="crop_use">Utiliser cette photo</string>
 </resources>

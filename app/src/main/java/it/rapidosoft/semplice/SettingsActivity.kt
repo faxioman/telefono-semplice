@@ -5,6 +5,8 @@ import android.app.role.RoleManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -62,6 +64,7 @@ import androidx.compose.material.icons.filled.CallEnd
 import androidx.compose.material.icons.filled.PhoneDisabled
 import androidx.compose.material.icons.filled.Sms
 import androidx.compose.material.icons.filled.Contacts
+import androidx.compose.material.icons.filled.Crop
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
@@ -116,6 +119,7 @@ import it.rapidosoft.semplice.data.Photos
 import it.rapidosoft.semplice.data.Store
 import it.rapidosoft.semplice.data.ThemeMode
 import it.rapidosoft.semplice.ui.ContactPhoto
+import it.rapidosoft.semplice.ui.PhotoCropper
 import it.rapidosoft.semplice.ui.Green
 import it.rapidosoft.semplice.ui.Ink
 import it.rapidosoft.semplice.ui.Muted
@@ -310,7 +314,15 @@ private fun MainSettings(
         refresh++
     }
     val log by store.log.collectAsState()
-    val pickFromBook = rememberContactPicker(onNewFromBook)
+    val pickFromBook = rememberContactPicker(onPicked = onNewFromBook)
+    var bookTarget by remember { mutableStateOf("white") } // lista a cui aggiungere dalla rubrica
+    val pickNumberFromBook = rememberContactPicker(withPhoto = false) { p ->
+        val n = p.number.trim()
+        if (n.isNotEmpty()) store.updateSettings {
+            if (bookTarget == "black") it.copy(blacklist = (it.blacklist + n).distinct())
+            else it.copy(whitelist = (it.whitelist + n).distinct())
+        }
+    }
     val sms = remember(refresh) { SmsBox.latest(context) }
 
     var addNumberTo by remember { mutableStateOf<String?>(null) } // "black" | "white"
@@ -440,6 +452,7 @@ private fun MainSettings(
                 numbers = settings.blacklist,
                 active = settings.filterMode == FilterMode.BLACKLIST,
                 onAdd = { addNumberTo = "black" },
+                onAddFromBook = { bookTarget = "black"; pickNumberFromBook() },
                 onRemove = { n -> store.updateSettings { it.copy(blacklist = it.blacklist - n) } },
             )
             numberList(
@@ -447,6 +460,7 @@ private fun MainSettings(
                 numbers = settings.whitelist,
                 active = settings.filterMode == FilterMode.WHITELIST,
                 onAdd = { addNumberTo = "white" },
+                onAddFromBook = { bookTarget = "white"; pickNumberFromBook() },
                 onRemove = { n -> store.updateSettings { it.copy(whitelist = it.whitelist - n) } },
             )
 
@@ -650,19 +664,30 @@ private fun LazyListScope.numberList(
     numbers: List<String>,
     active: Boolean,
     onAdd: () -> Unit,
+    onAddFromBook: () -> Unit,
     onRemove: (String) -> Unit,
 ) {
     item {
         Row(Modifier.fillMaxWidth().padding(top = 16.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(stringResource(title), fontWeight = FontWeight.Bold, fontSize = 18.sp,
                 color = if (active) Ink else Muted, modifier = Modifier.weight(1f))
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedButton(onClick = onAddFromBook) {
+                Icon(Icons.Filled.Contacts, null); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.number_add_from_book))
+            }
             TextButton(onClick = onAdd) { Icon(Icons.Filled.Add, null); Text(stringResource(R.string.number_add)) }
         }
         if (numbers.isEmpty()) Text(stringResource(R.string.list_empty), color = Muted)
     }
     items(numbers, key = { "$title-$it" }) { n ->
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text(n, fontSize = 18.sp, modifier = Modifier.weight(1f))
+            val context = LocalContext.current
+            val name = remember(n) { ContactImport.nameFor(context, n) }
+            Column(Modifier.weight(1f)) {
+                if (name != null) Text(name, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                Text(n, fontSize = if (name != null) 15.sp else 18.sp, color = if (name != null) Muted else Ink)
+            }
             IconButton(onClick = { onRemove(n) }) { Icon(Icons.Filled.Delete, stringResource(R.string.delete), tint = Red) }
         }
     }
@@ -770,10 +795,10 @@ private class PickPhoneContact : ActivityResultContract<Unit, Uri?>() {
  * solo per la foto (senza, arrivano comunque nome e numero).
  */
 @Composable
-private fun rememberContactPicker(onPicked: (Prefill) -> Unit): () -> Unit {
+private fun rememberContactPicker(withPhoto: Boolean = true, onPicked: (Prefill) -> Unit): () -> Unit {
     val context = LocalContext.current
     val picker = rememberLauncherForActivityResult(PickPhoneContact()) { uri ->
-        uri?.let { ContactImport.read(context, it) }?.let(onPicked)
+        uri?.let { ContactImport.read(context, it, withPhoto) }?.let(onPicked)
     }
     val permission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
         runCatching { picker.launch(Unit) }
@@ -800,13 +825,23 @@ private fun EditContact(contactId: String?, prefill: Prefill?, onDone: () -> Uni
         photo = newPath
     }
 
+    // Foto in fase di ritaglio (dalla galleria, o quella attuale da risistemare).
+    var cropSource by remember { mutableStateOf<Bitmap?>(null) }
     val pickImage = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri != null) Photos.import(context, uri)?.let { replacePhoto(it) }
+        if (uri != null) cropSource = Photos.decodeForCrop(context, uri)
     }
     val pickContact = rememberContactPicker { p ->
         number = p.number
         if (name.isBlank()) name = p.name
         p.photo?.let { replacePhoto(it) }
+    }
+
+    cropSource?.let { src ->
+        PhotoCropper(src, onCancel = { cropSource = null }) { cropped ->
+            Photos.saveBitmap(context, cropped)?.let { replacePhoto(it) }
+            cropSource = null
+        }
+        return
     }
 
     fun cancel() {
@@ -840,6 +875,12 @@ private fun EditContact(contactId: String?, prefill: Prefill?, onDone: () -> Uni
                     Text(stringResource(R.string.contact_photo_remove))
                 }
             }
+        }
+        photo?.let { current ->
+            OutlinedButton(
+                onClick = { cropSource = BitmapFactory.decodeFile(current) },
+                modifier = Modifier.fillMaxWidth(),
+            ) { Icon(Icons.Filled.Crop, null); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.photo_adjust)) }
         }
         OutlinedButton(onClick = pickContact, modifier = Modifier.fillMaxWidth()) {
             Icon(Icons.Filled.Contacts, null); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.contact_import))

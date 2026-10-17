@@ -98,4 +98,8 @@
     <string name="pref_wake_on_power">Игнорировать кнопку питания</string>
     <string name="pref_wake_on_power_hint">Если нажать кнопку питания, экран сам включится снова. Долгим нажатием телефон по-прежнему можно выключить.</string>
     <string name="buy_coffee">☕ Угостить меня кофе</string>
+    <string name="number_add_from_book">Из телефонной книги</string>
+    <string name="photo_adjust">Настроить фото</string>
+    <string name="crop_hint">Перетащите, чтобы сдвинуть фото; сведите или разведите два пальца, чтобы изменить масштаб.</string>
+    <string name="crop_use">Использовать это фото</string>
 </resources>

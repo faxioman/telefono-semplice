@@ -98,4 +98,8 @@
     <string name="pref_wake_on_power">تجاهل زر التشغيل</string>
     <string name="pref_wake_on_power_hint">عند الضغط على زر التشغيل تعود الشاشة للعمل تلقائيًا. يمكن إيقاف الهاتف بالضغط المطوّل على الزر.</string>
     <string name="buy_coffee">☕ اشترِ لي قهوة</string>
+    <string name="number_add_from_book">من دفتر العناوين</string>
+    <string name="photo_adjust">ضبط الصورة</string>
+    <string name="crop_hint">اسحب لتحريك الصورة، وباعد أو قرّب إصبعين للتكبير أو التصغير.</string>
+    <string name="crop_use">استخدام هذه الصورة</string>
 </resources>

@@ -98,4 +98,8 @@
     <string name="pref_wake_on_power">忽略电源键</string>
     <string name="pref_wake_on_power_hint">按下电源键后屏幕会自动重新亮起。长按电源键仍可关机。</string>
     <string name="buy_coffee">☕ 请我喝杯咖啡</string>
+    <string name="number_add_from_book">从通讯录</string>
+    <string name="photo_adjust">调整照片</string>
+    <string name="crop_hint">拖动以移动照片，用两根手指缩放。</string>
+    <string name="crop_use">使用这张照片</string>
 </resources>

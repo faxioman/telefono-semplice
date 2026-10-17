@@ -30,14 +30,24 @@ object Photos {
     fun importBytes(context: Context, bytes: ByteArray): String? =
         save(context, ImageDecoder.createSource(ByteBuffer.wrap(bytes)))
 
-    private fun save(context: Context, source: ImageDecoder.Source): String? = runCatching {
-        val bmp = ImageDecoder.decodeBitmap(source) { decoder, info, _ ->
+    /** Immagine scelta dall'utente, abbastanza grande per ritagliarla e ingrandirla. */
+    fun decodeForCrop(context: Context, uri: Uri): Bitmap? =
+        decode(ImageDecoder.createSource(context.contentResolver, uri), 2048)
+
+    private fun save(context: Context, source: ImageDecoder.Source): String? =
+        decode(source, MAX_SIDE)?.let { saveBitmap(context, it) }
+
+    private fun decode(source: ImageDecoder.Source, maxSide: Int): Bitmap? = runCatching {
+        ImageDecoder.decodeBitmap(source) { decoder, info, _ ->
             val w = info.size.width
             val h = info.size.height
-            val scale = minOf(1f, MAX_SIDE.toFloat() / maxOf(w, h))
+            val scale = minOf(1f, maxSide.toFloat() / maxOf(w, h))
             decoder.setTargetSize((w * scale).toInt().coerceAtLeast(1), (h * scale).toInt().coerceAtLeast(1))
             decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
         }
+    }.getOrNull()
+
+    fun saveBitmap(context: Context, bmp: Bitmap): String? = runCatching {
         val dir = File(context.filesDir, "photos").apply { mkdirs() }
         val out = File(dir, "${System.currentTimeMillis()}.jpg")
         out.outputStream().use { bmp.compress(Bitmap.CompressFormat.JPEG, 88, it) }

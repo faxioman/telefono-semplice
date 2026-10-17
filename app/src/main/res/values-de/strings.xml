@@ -98,4 +98,8 @@
     <string name="pref_wake_on_power">Ein-/Aus-Taste ignorieren</string>
     <string name="pref_wake_on_power_hint">Wird die Ein-/Aus-Taste gedrückt, schaltet sich der Bildschirm von selbst wieder ein. Langes Drücken schaltet das Telefon weiterhin aus.</string>
     <string name="buy_coffee">☕ Spendier mir einen Kaffee</string>
+    <string name="number_add_from_book">Aus dem Adressbuch</string>
+    <string name="photo_adjust">Foto anpassen</string>
+    <string name="crop_hint">Zum Verschieben ziehen, mit zwei Fingern vergrößern oder verkleinern.</string>
+    <string name="crop_use">Dieses Foto verwenden</string>
 </resources>

@@ -98,4 +98,8 @@
     <string name="pref_wake_on_power">Ignore the power button</string>
     <string name="pref_wake_on_power_hint">If the power button is pressed, the screen turns back on by itself. Holding the button still turns the phone off.</string>
     <string name="buy_coffee">☕ Buy me a coffee</string>
+    <string name="number_add_from_book">From address book</string>
+    <string name="photo_adjust">Adjust photo</string>
+    <string name="crop_hint">Drag to move the photo, pinch with two fingers to zoom in or out.</string>
+    <string name="crop_use">Use this photo</string>
 </resources>

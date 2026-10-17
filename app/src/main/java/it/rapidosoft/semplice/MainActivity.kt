@@ -14,6 +14,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -57,6 +58,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LifecycleResumeEffect
@@ -149,7 +151,9 @@ internal fun HomeContent(
     }
     val landscape = isLandscape()
     val grid: @Composable (Modifier) -> Unit = { modifier ->
-        Box(modifier) {
+        BoxWithConstraints(modifier) {
+            val tiles = contacts.size + if (showKeypad) 1 else 0
+            val columns = if (landscape) landscapeColumns(tiles, maxWidth, maxHeight) else 2
             if (contacts.isEmpty() && !showKeypad) {
                 Text(
                     stringResource(R.string.home_no_contacts),
@@ -158,10 +162,11 @@ internal fun HomeContent(
                 )
             } else {
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(if (landscape) 3 else 2),
+                    columns = GridCells.Fixed(columns),
+                    modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(vertical = 8.dp),
                     horizontalArrangement = Arrangement.spacedBy(14.dp),
-                    verticalArrangement = Arrangement.spacedBy(14.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp, if (landscape) Alignment.CenterVertically else Alignment.Top),
                 ) {
                     items(contacts, key = { it.id }) { c ->
                         ContactTile(c, compact = landscape) { onContact(c) }
@@ -177,13 +182,13 @@ internal fun HomeContent(
     if (landscape) {
         // Orizzontale: orologio e avvisi a sinistra, contatti a destra.
         Row(Modifier.fillMaxSize().safeDrawingPadding().padding(horizontal = 16.dp)) {
-            Column(Modifier.weight(0.38f).fillMaxHeight().padding(end = 16.dp), verticalArrangement = Arrangement.Center) {
-                Clock(now)
+            Column(Modifier.weight(0.26f).fillMaxHeight().padding(end = 12.dp), verticalArrangement = Arrangement.Center) {
+                Clock(now, compact = true)
                 banner()
                 Spacer(Modifier.weight(1f))
                 SettingsButton(onSettings)
             }
-            grid(Modifier.weight(0.62f).fillMaxHeight())
+            grid(Modifier.weight(0.74f).fillMaxHeight())
         }
     } else {
         Column(Modifier.fillMaxSize().safeDrawingPadding().padding(horizontal = 16.dp)) {
@@ -206,7 +211,7 @@ private fun SettingsButton(onSettings: () -> Unit) {
 }
 
 @Composable
-private fun Clock(fixed: LocalDateTime?) {
+private fun Clock(fixed: LocalDateTime?, compact: Boolean = false) {
     val ticking by produceState(fixed ?: LocalDateTime.now()) {
         while (fixed == null) {
             value = LocalDateTime.now()
@@ -219,8 +224,8 @@ private fun Clock(fixed: LocalDateTime?) {
     val date = now.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(locale))
         .replaceFirstChar { it.titlecase(locale) }
     Column(Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(time, fontSize = 64.sp, fontWeight = FontWeight.Bold, color = Ink)
-        Text(date, fontSize = 24.sp, color = Ink, textAlign = TextAlign.Center)
+        Text(time, fontSize = if (compact) 44.sp else 64.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Text(date, fontSize = if (compact) 17.sp else 24.sp, color = Ink, textAlign = TextAlign.Center)
     }
 }
 
@@ -237,8 +242,22 @@ private fun Banner(text: String, color: Color, onClick: () -> Unit) {
     }
 }
 
-// In orizzontale riquadri più bassi, così due file stanno nello schermo senza scorrere.
-private fun tileRatio(compact: Boolean) = if (compact) 4f / 3f else 1f
+// Foto quadrate, come il ritaglio fatto nell'editor.
+private fun tileRatio(@Suppress("UNUSED_PARAMETER") compact: Boolean) = 1f
+
+/**
+ * In orizzontale: il minor numero di colonne (quindi le foto più grandi) con cui tutti
+ * i riquadri stanno nello schermo senza scorrere. Riquadro ≈ larghezza + 40dp per il nome.
+ */
+private fun landscapeColumns(tiles: Int, width: Dp, height: Dp): Int {
+    val gap = 14f
+    for (c in 2..6) {
+        val tileW = (width.value - gap * (c - 1)) / c
+        val rows = (tiles + c - 1) / c
+        if (rows * (tileW + 40f) + gap * (rows - 1) + 16f <= height.value) return c
+    }
+    return 6
+}
 private fun tileFont(compact: Boolean) = if (compact) 21.sp else 26.sp
 
 @Composable

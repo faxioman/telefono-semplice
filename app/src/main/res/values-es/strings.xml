@@ -98,4 +98,8 @@
     <string name="pref_wake_on_power">Ignorar el botón de encendido</string>
     <string name="pref_wake_on_power_hint">Si se pulsa el botón de encendido, la pantalla vuelve a encenderse sola. Manteniéndolo pulsado se puede apagar el teléfono.</string>
     <string name="buy_coffee">☕ Invítame a un café</string>
+    <string name="number_add_from_book">De la agenda</string>
+    <string name="photo_adjust">Ajustar la foto</string>
+    <string name="crop_hint">Arrastra para mover la foto y pellizca con dos dedos para ampliar o reducir.</string>
+    <string name="crop_use">Usar esta foto</string>
 </resources>

@@ -98,4 +98,8 @@
     <string name="pref_wake_on_power">Ignora il tasto di accensione</string>
     <string name="pref_wake_on_power_hint">Se viene premuto il tasto di accensione, lo schermo si riaccende da solo. Tenendolo premuto si può comunque spegnere il telefono.</string>
     <string name="buy_coffee">☕ Offrimi un caffè</string>
+    <string name="number_add_from_book">Dalla rubrica</string>
+    <string name="photo_adjust">Sistema la foto</string>
+    <string name="crop_hint">Trascina per spostare la foto, allarga o stringi con due dita per ingrandire o ridurre.</string>
+    <string name="crop_use">Usa questa foto</string>
 </resources>

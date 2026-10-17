@@ -107,6 +107,18 @@ class ScreenshotsTest {
         }
     }
 
+    @Test fun homeLandscapeMany() {
+        landscape()
+        val many = listOf("Giulia", "Marco", "Dottor Rossi", "Nonna Lina", "Luca", "Sara", "Farmacia")
+            .mapIndexed { i, n -> Contact(id = "$i", name = n, number = "$i") }
+        paparazzi.snapshot {
+            SempliceTheme(dark = false) {
+                HomeContent(many, showKeypad = true, callInProgress = false, setupNeeded = false,
+                    onContact = {}, onKeypad = {}, onReturnToCall = {}, onSettings = {}, now = now)
+            }
+        }
+    }
+
     @Test fun incomingCallLandscape() {
         landscape()
         paparazzi.snapshot {
@@ -124,6 +136,17 @@ class ScreenshotsTest {
     @Test fun pinLandscape() {
         landscape()
         paparazzi.snapshot { SempliceTheme(dark = false) { PinPad("Inserisci il codice", {}, { false }, "Codice errato") {} } }
+    }
+
+    @Test fun photoCropper() = paparazzi.snapshot {
+        // immagine finta 1200x800 a fasce, per vedere il riquadro di ritaglio
+        val bmp = android.graphics.Bitmap.createBitmap(1200, 800, android.graphics.Bitmap.Config.ARGB_8888)
+        val canvas = android.graphics.Canvas(bmp)
+        val paint = android.graphics.Paint()
+        listOf(0xFF1565C0, 0xFFE65100, 0xFF6A1B9A, 0xFF2E7D32).forEachIndexed { i, c ->
+            paint.color = c.toInt(); canvas.drawRect(i * 300f, 0f, (i + 1) * 300f, 800f, paint)
+        }
+        SempliceTheme(dark = false) { it.rapidosoft.semplice.ui.PhotoCropper(bmp, {}) {} }
     }
 
     @Test fun pin() = paparazzi.snapshot {

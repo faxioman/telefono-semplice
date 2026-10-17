@@ -311,6 +311,19 @@ T["ar"] += ["☕ اشترِ لي قهوة"]
 T["hi"] += ["☕ मुझे एक कॉफ़ी पिलाएँ"]
 T["zh"] += ["☕ 请我喝杯咖啡"]
 
+# --- v0.6: liste dalla rubrica, ritaglio foto
+KEYS += ["number_add_from_book", "photo_adjust", "crop_hint", "crop_use"]
+T[""] += ["From address book", "Adjust photo", "Drag to move the photo, pinch with two fingers to zoom in or out.", "Use this photo"]
+T["it"] += ["Dalla rubrica", "Sistema la foto", "Trascina per spostare la foto, allarga o stringi con due dita per ingrandire o ridurre.", "Usa questa foto"]
+T["es"] += ["De la agenda", "Ajustar la foto", "Arrastra para mover la foto y pellizca con dos dedos para ampliar o reducir.", "Usar esta foto"]
+T["fr"] += ["Depuis le répertoire", "Ajuster la photo", "Faites glisser pour déplacer la photo, pincez à deux doigts pour zoomer ou dézoomer.", "Utiliser cette photo"]
+T["de"] += ["Aus dem Adressbuch", "Foto anpassen", "Zum Verschieben ziehen, mit zwei Fingern vergrößern oder verkleinern.", "Dieses Foto verwenden"]
+T["pt"] += ["Da agenda", "Ajustar a foto", "Arraste para mover a foto e use dois dedos para ampliar ou reduzir.", "Usar esta foto"]
+T["ru"] += ["Из телефонной книги", "Настроить фото", "Перетащите, чтобы сдвинуть фото; сведите или разведите два пальца, чтобы изменить масштаб.", "Использовать это фото"]
+T["ar"] += ["من دفتر العناوين", "ضبط الصورة", "اسحب لتحريك الصورة، وباعد أو قرّب إصبعين للتكبير أو التصغير.", "استخدام هذه الصورة"]
+T["hi"] += ["फ़ोन बुक से", "फ़ोटो ठीक करें", "फ़ोटो खिसकाने के लिए खींचें, बड़ा या छोटा करने के लिए दो उँगलियों से पिंच करें।", "यह फ़ोटो लगाएँ"]
+T["zh"] += ["从通讯录", "调整照片", "拖动以移动照片，用两根手指缩放。", "使用这张照片"]
+
 def esc(s):
     s = escape(s).replace("'", "\\'").replace('"', '\\"').replace("\n", "\\n")
     if s.startswith("@") or s.startswith("?"): s = "\\" + s
