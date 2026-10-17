@@ -17,13 +17,26 @@ android {
         versionName = "0.3.0"
     }
 
+    // Chiave di firma (anche per il Play Store): mai nel repo, arriva da variabili
+    // d'ambiente / GitHub Secrets. Senza, la release resta firmata con la chiave di debug.
+    val keystorePath = System.getenv("SIGNING_KEYSTORE")
+    signingConfigs {
+        if (keystorePath != null) {
+            create("release") {
+                storeFile = file(keystorePath)
+                storePassword = System.getenv("SIGNING_STORE_PASSWORD")
+                keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+                keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
-            // Prototipo: firmato con la chiave di debug per poterlo installare subito.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
         }
     }
     compileOptions {

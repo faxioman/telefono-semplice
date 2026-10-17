@@ -29,6 +29,24 @@ App Android pensata per persone anziane con demenza: **sostituisce sia la scherm
 5. Impostare un **codice** in *Sicurezza*.
 6. Per uscire dal launcher: Impostazioni → *Cambia app Home*.
 
+## Scaricare l'APK
+
+A ogni push su `main` la CI compila l'APK e il bundle per il Play Store (`.aab`) e li allega alla Release della versione corrente.
+APK più recente: https://github.com/faxioman/telefono-semplice/releases/latest/download/TelefonoSemplice.apk
+
+## Firma
+
+La chiave non sta nel repository. La CI la legge da questi GitHub Secrets (*Settings → Secrets and variables → Actions*):
+
+| Secret | Contenuto |
+|---|---|
+| `KEYSTORE_BASE64` | il file `.jks` codificato in base64 |
+| `SIGNING_STORE_PASSWORD` | password del keystore |
+| `SIGNING_KEY_ALIAS` | alias della chiave |
+| `SIGNING_KEY_PASSWORD` | password della chiave |
+
+In locale si usano le variabili d'ambiente `SIGNING_KEYSTORE` (percorso del file), `SIGNING_STORE_PASSWORD`, `SIGNING_KEY_ALIAS` e `SIGNING_KEY_PASSWORD`. Se mancano, la release viene firmata con la chiave di debug.
+
 ## Compilare
 
 ```
