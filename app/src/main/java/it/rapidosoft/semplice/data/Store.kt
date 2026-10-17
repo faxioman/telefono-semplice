@@ -17,6 +17,8 @@ data class Contact(
 
 enum class FilterMode { OFF, BLACKLIST, WHITELIST }
 
+enum class ThemeMode { LIGHT, DARK }
+
 /** MISSED: nessuno ha risposto · REJECTED: "Butta giù" · BLOCKED: liste · BUSY: era già al telefono */
 enum class LogType { MISSED, REJECTED, BLOCKED, BUSY }
 
@@ -29,6 +31,7 @@ data class Settings(
     val blockHidden: Boolean = false,
     val blacklist: List<String> = emptyList(),
     val whitelist: List<String> = emptyList(),
+    val theme: ThemeMode = ThemeMode.LIGHT,
 )
 
 /** Persistenza minimale su SharedPreferences (JSON). Unica istanza per processo. */
@@ -102,6 +105,7 @@ class Store private constructor(context: Context) {
             put("blockHidden", s.blockHidden)
             put("blacklist", JSONArray(s.blacklist))
             put("whitelist", JSONArray(s.whitelist))
+            put("theme", s.theme.name)
         }.toString()).apply()
     }
 
@@ -140,6 +144,7 @@ class Store private constructor(context: Context) {
             blockHidden = o.optBoolean("blockHidden", false),
             blacklist = o.optJSONArray("blacklist").toStringList(),
             whitelist = o.optJSONArray("whitelist").toStringList(),
+            theme = runCatching { ThemeMode.valueOf(o.optString("theme")) }.getOrDefault(ThemeMode.LIGHT),
         )
     }.getOrDefault(Settings())
 

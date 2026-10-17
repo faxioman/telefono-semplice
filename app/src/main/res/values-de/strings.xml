@@ -85,4 +85,7 @@
     <string name="sms_unavailable">Dieses Telefon erlaubt das Lesen von SMS nicht. Bitte die Nachrichten-App verwenden.</string>
     <string name="busy_info">Kommt während eines Gesprächs ein zweiter Anruf, hört der Anrufer besetzt.</string>
     <string name="busy_disable_waiting">Auch Anklopfen beim Netzbetreiber ausschalten (#43#)</string>
+    <string name="section_theme">Darstellung</string>
+    <string name="theme_light">Hell</string>
+    <string name="theme_dark">Dunkel</string>
 </resources>

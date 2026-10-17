@@ -85,4 +85,7 @@
     <string name="sms_unavailable">Этот телефон не разрешает читать SMS. Используйте приложение «Сообщения».</string>
     <string name="busy_info">Если во время разговора поступит второй звонок, звонящий услышит «занято».</string>
     <string name="busy_disable_waiting">Также отключить ожидание вызова у оператора (#43#)</string>
+    <string name="section_theme">Оформление</string>
+    <string name="theme_light">Светлое</string>
+    <string name="theme_dark">Тёмное</string>
 </resources>

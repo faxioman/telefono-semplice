@@ -107,12 +107,16 @@ import it.rapidosoft.semplice.data.Sms
 import it.rapidosoft.semplice.data.SmsBox
 import it.rapidosoft.semplice.data.Photos
 import it.rapidosoft.semplice.data.Store
+import it.rapidosoft.semplice.data.ThemeMode
 import it.rapidosoft.semplice.ui.ContactPhoto
 import it.rapidosoft.semplice.ui.Green
 import it.rapidosoft.semplice.ui.Ink
 import it.rapidosoft.semplice.ui.Muted
 import it.rapidosoft.semplice.ui.Red
 import it.rapidosoft.semplice.ui.SempliceTheme
+import it.rapidosoft.semplice.ui.Accent
+import it.rapidosoft.semplice.ui.Amber
+import it.rapidosoft.semplice.ui.Tile
 import java.io.File
 import java.time.Instant
 import java.time.ZoneId
@@ -185,7 +189,7 @@ internal fun PinPad(
                     row.forEach { k ->
                         Box(
                             Modifier.weight(1f).fillMaxHeight().clip(RoundedCornerShape(16.dp))
-                                .background(if (k == "OK") Green else Color.White)
+                                .background(if (k == "OK") Green else Tile)
                                 .clickable {
                                     error = false
                                     when (k) {
@@ -339,7 +343,7 @@ private fun MainSettings(onClose: () -> Unit, onEditContact: (String?) -> Unit, 
             items(contacts, key = { it.id }) { c ->
                 Row(
                     Modifier.fillMaxWidth().padding(vertical = 6.dp).clip(RoundedCornerShape(16.dp))
-                        .background(Color.White).clickable { onEditContact(c.id) }.padding(8.dp),
+                        .background(Tile).clickable { onEditContact(c.id) }.padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     ContactPhoto(c.photo, c.name, Modifier.size(56.dp), corner = 12.dp)
@@ -419,6 +423,22 @@ private fun MainSettings(onClose: () -> Unit, onEditContact: (String?) -> Unit, 
                         OutlinedButton(onClick = { store.updateSettings { it.copy(pin = "") } }) {
                             Text(stringResource(R.string.pin_remove))
                         }
+                    }
+                }
+            }
+
+            /* --- aspetto --- */
+            section(R.string.section_theme)
+            item {
+                listOf(ThemeMode.LIGHT to R.string.theme_light, ThemeMode.DARK to R.string.theme_dark).forEach { (mode, label) ->
+                    Row(
+                        Modifier.fillMaxWidth().selectable(settings.theme == mode, role = Role.RadioButton) {
+                            store.updateSettings { it.copy(theme = mode) }
+                        }.padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(selected = settings.theme == mode, onClick = null)
+                        Text(stringResource(label), fontSize = 17.sp, modifier = Modifier.padding(start = 8.dp))
                     }
                 }
             }
@@ -538,7 +558,7 @@ private fun requestRole(context: Context, role: String, launcher: ActivityResult
 private fun LazyListScope.section(title: Int) {
     item {
         Column(Modifier.padding(top = 24.dp, bottom = 8.dp)) {
-            Text(stringResource(title).uppercase(), color = Color(0xFF1B5E20), fontWeight = FontWeight.Bold, fontSize = 15.sp)
+            Text(stringResource(title).uppercase(), color = Accent, fontWeight = FontWeight.Bold, fontSize = 15.sp)
             HorizontalDivider(Modifier.padding(top = 4.dp))
         }
     }
@@ -580,7 +600,7 @@ internal fun LogRow(e: LogEntry, contactName: String?, onCallBack: () -> Unit) {
         LogType.MISSED -> Triple(Icons.AutoMirrored.Filled.CallMissed, Red, R.string.log_missed)
         LogType.REJECTED -> Triple(Icons.Filled.CallEnd, Muted, R.string.log_rejected)
         LogType.BLOCKED -> Triple(Icons.Filled.Block, Muted, R.string.log_blocked)
-        LogType.BUSY -> Triple(Icons.Filled.PhoneDisabled, Color(0xFFB26A00), R.string.log_busy)
+        LogType.BUSY -> Triple(Icons.Filled.PhoneDisabled, Amber, R.string.log_busy)
     }
     Row(Modifier.fillMaxWidth().padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
         Icon(icon, null, tint = color, modifier = Modifier.size(28.dp))
@@ -601,7 +621,7 @@ internal fun LogRow(e: LogEntry, contactName: String?, onCallBack: () -> Unit) {
 internal fun SmsRow(m: Sms, contactName: String?, onClick: () -> Unit) {
     Column(
         Modifier.fillMaxWidth().padding(vertical = 4.dp).clip(RoundedCornerShape(12.dp))
-            .background(Color.White).clickable(onClick = onClick).padding(12.dp),
+            .background(Tile).clickable(onClick = onClick).padding(12.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(

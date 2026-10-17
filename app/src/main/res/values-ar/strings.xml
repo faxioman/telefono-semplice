@@ -85,4 +85,7 @@
     <string name="sms_unavailable">هذا الهاتف لا يسمح بقراءة الرسائل. استخدم تطبيق الرسائل.</string>
     <string name="busy_info">إذا وصلت مكالمة ثانية أثناء مكالمة، سيسمع المتصل نغمة انشغال.</string>
     <string name="busy_disable_waiting">إيقاف خدمة انتظار المكالمات لدى المشغّل أيضًا (#43#)</string>
+    <string name="section_theme">المظهر</string>
+    <string name="theme_light">فاتح</string>
+    <string name="theme_dark">داكن</string>
 </resources>

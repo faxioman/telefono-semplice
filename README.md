@@ -13,6 +13,7 @@ App Android pensata per persone anziane con demenza: **sostituisce sia la scherm
 | Tastierone | `KeypadActivity`, disattivabile dalle preferenze. Gestisce anche `ACTION_DIAL` (requisito per essere app Telefono predefinita) |
 | Preferenze protette | Ingranaggio semitrasparente in basso a destra. PIN da 4–8 cifre (all'inizio nessun PIN: va impostato) |
 | Chiamata in arrivo | Foto a tutto schermo, nome grande, bottoni **Butta giù** / **Rispondi**. Funziona anche a schermo bloccato grazie a una notifica full-screen `CallStyle` |
+| Tema | Chiaro o scuro, dalle impostazioni (sezione *Aspetto*). Verde e rosso dei bottoni restano uguali nei due temi |
 | Lingue | it, en, es, fr, de, pt, ru, ar, hi, zh. Si sceglie dalle preferenze, oppure segue la lingua del sistema |
 | Chiamate perse | Elenco nelle impostazioni (perse, buttate giù, bloccate, occupato) con tasto "Richiama". Lo tiene l'app, quindi non servono permessi |
 | SMS | Nelle impostazioni c'è un tasto per aprire l'app Messaggi ufficiale. Concedendo il permesso SMS, gli ultimi messaggi compaiono anche lì; toccandone uno si apre la conversazione |

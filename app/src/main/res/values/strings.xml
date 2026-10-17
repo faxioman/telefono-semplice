@@ -85,4 +85,7 @@
     <string name="sms_unavailable">This phone does not allow reading SMS. Use the Messages app.</string>
     <string name="busy_info">If a second call arrives during a call, the caller gets a busy signal.</string>
     <string name="busy_disable_waiting">Also disable call waiting with the carrier (#43#)</string>
+    <string name="section_theme">Appearance</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
 </resources>

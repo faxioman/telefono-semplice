@@ -68,6 +68,8 @@ import it.rapidosoft.semplice.ui.Green
 import it.rapidosoft.semplice.ui.Ink
 import it.rapidosoft.semplice.ui.Muted
 import it.rapidosoft.semplice.ui.SempliceTheme
+import it.rapidosoft.semplice.ui.Amber
+import it.rapidosoft.semplice.ui.Tile
 import kotlinx.coroutines.delay
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -141,7 +143,7 @@ internal fun HomeContent(
         if (callInProgress) {
             Banner(stringResource(R.string.home_call_in_progress), Green, onReturnToCall)
         } else if (setupNeeded) {
-            Banner(stringResource(R.string.home_setup_needed), Color(0xFFB26A00), onSettings)
+            Banner(stringResource(R.string.home_setup_needed), Amber, onSettings)
         }
 
         Box(Modifier.weight(1f).fillMaxWidth()) {
@@ -216,7 +218,7 @@ private fun ContactTile(contact: Contact, onClick: () -> Unit) {
     Card(
         onClick = onClick,
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = Tile),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
     ) {
         Column(Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {

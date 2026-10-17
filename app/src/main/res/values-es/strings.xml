@@ -85,4 +85,7 @@
     <string name="sms_unavailable">Este teléfono no permite leer los SMS. Usa la app de Mensajes.</string>
     <string name="busy_info">Si entra una segunda llamada durante una conversación, quien llama oirá ocupado.</string>
     <string name="busy_disable_waiting">Desactivar también la llamada en espera del operador (#43#)</string>
+    <string name="section_theme">Apariencia</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Oscuro</string>
 </resources>

@@ -46,6 +46,7 @@ import it.rapidosoft.semplice.ui.BigButton
 import it.rapidosoft.semplice.ui.Green
 import it.rapidosoft.semplice.ui.Ink
 import it.rapidosoft.semplice.ui.SempliceTheme
+import it.rapidosoft.semplice.ui.Tile
 
 /** Tastierone numerico. Riceve anche le richieste ACTION_DIAL di altre app. */
 class KeypadActivity : AppCompatActivity() {
@@ -104,7 +105,7 @@ private fun KeypadScreen(initial: String, onBack: () -> Unit) {
 @Composable
 private fun Key(label: String, modifier: Modifier, onLongClick: (() -> Unit)?, onClick: () -> Unit) {
     Box(
-        modifier.clip(RoundedCornerShape(20.dp)).background(Color.White)
+        modifier.clip(RoundedCornerShape(20.dp)).background(Tile)
             .combinedClickable(onClick = onClick, onLongClick = onLongClick),
         contentAlignment = Alignment.Center,
     ) {

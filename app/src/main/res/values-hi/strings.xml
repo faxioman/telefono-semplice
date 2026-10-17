@@ -85,4 +85,7 @@
     <string name="sms_unavailable">यह फ़ोन SMS पढ़ने की अनुमति नहीं देता। संदेश ऐप का उपयोग करें।</string>
     <string name="busy_info">कॉल के दौरान दूसरी कॉल आने पर कॉल करने वाले को व्यस्त सुनाई देगा।</string>
     <string name="busy_disable_waiting">ऑपरेटर की कॉल वेटिंग भी बंद करें (#43#)</string>
+    <string name="section_theme">रूप</string>
+    <string name="theme_light">हल्का</string>
+    <string name="theme_dark">गहरा</string>
 </resources>

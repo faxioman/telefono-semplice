@@ -248,6 +248,19 @@ T["zh"] += ["未接和已拦截的来电", "未接", "已挂断", "已拦截", "
 "通话中如有第二个来电，对方会听到占线。",
 "同时关闭运营商的呼叫等待（#43#）"]
 
+# --- v0.3: tema
+KEYS += ["section_theme", "theme_light", "theme_dark"]
+T[""] += ["Appearance", "Light", "Dark"]
+T["it"] += ["Aspetto", "Chiaro", "Scuro"]
+T["es"] += ["Apariencia", "Claro", "Oscuro"]
+T["fr"] += ["Apparence", "Clair", "Sombre"]
+T["de"] += ["Darstellung", "Hell", "Dunkel"]
+T["pt"] += ["Aparência", "Claro", "Escuro"]
+T["ru"] += ["Оформление", "Светлое", "Тёмное"]
+T["ar"] += ["المظهر", "فاتح", "داكن"]
+T["hi"] += ["रूप", "हल्का", "गहरा"]
+T["zh"] += ["外观", "浅色", "深色"]
+
 def esc(s):
     s = escape(s).replace("'", "\\'").replace('"', '\\"').replace("\n", "\\n")
     if s.startswith("@") or s.startswith("?"): s = "\\" + s

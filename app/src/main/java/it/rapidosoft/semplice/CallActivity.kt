@@ -45,6 +45,7 @@ import it.rapidosoft.semplice.call.number
 import it.rapidosoft.semplice.call.stateCompat
 import it.rapidosoft.semplice.data.Numbers
 import it.rapidosoft.semplice.data.Store
+import it.rapidosoft.semplice.ui.Accent
 import it.rapidosoft.semplice.ui.BigButton
 import it.rapidosoft.semplice.ui.ContactPhoto
 import it.rapidosoft.semplice.ui.Green
@@ -173,7 +174,7 @@ internal fun CallContent(
         Modifier.fillMaxSize().safeDrawingPadding().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(status, fontSize = 30.sp, color = if (statusHighlighted) Green else Muted, fontWeight = FontWeight.Bold)
+        Text(status, fontSize = 30.sp, color = if (statusHighlighted) Accent else Muted, fontWeight = FontWeight.Bold)
         ContactPhoto(
             photo, name,
             Modifier.weight(1f).fillMaxWidth().padding(vertical = 12.dp),

@@ -85,4 +85,7 @@
     <string name="sms_unavailable">此手机不允许读取短信，请使用短信应用。</string>
     <string name="busy_info">通话中如有第二个来电，对方会听到占线。</string>
     <string name="busy_disable_waiting">同时关闭运营商的呼叫等待（#43#）</string>
+    <string name="section_theme">外观</string>
+    <string name="theme_light">浅色</string>
+    <string name="theme_dark">深色</string>
 </resources>
