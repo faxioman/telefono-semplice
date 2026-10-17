@@ -1,0 +1,23 @@
+Einfaches Telefon macht aus einem Android-Smartphone ein ganz leichtes Telefon – gedacht für ältere Menschen oder Menschen mit Demenz und für die Angehörigen, die sich um sie kümmern.
+
+Ein einziger Bildschirm, der immer gleich bleibt: Uhrzeit und Datum in großer Schrift und die Fotos der Liebsten. Ein Tipp auf ein Foto genügt, und der Anruf startet – direkt über den Lautsprecher.
+
+FUNKTIONEN
+• Ersetzt Startbildschirm und Telefon-App: keine Symbole, Menüs oder Apps, in denen man sich verirrt
+• Kontakte mit großen Fotos: ein Tipp zum Anrufen (versehentliches Doppeltippen wird ignoriert)
+• Lautsprecher immer an, bei ausgehenden und eingehenden Anrufen
+• Eingehender Anruf im Vollbild: Foto, Name und zwei riesige Tasten, „Annehmen“ und „Auflegen“
+• Läuft bereits ein Gespräch, hört ein zweiter Anrufer besetzt
+• Anrufsperre: Sperrliste oder nur Kontakte und erlaubte Nummern; unterdrückte Nummern blockieren
+• Große Zifferntastatur, abschaltbar
+• Bildschirm immer an und einstellbare Helligkeit; die Ein-/Aus-Taste kann ignoriert werden
+• Helles oder dunkles Design, Hoch- und Querformat
+• 10 Sprachen: Deutsch, Englisch, Italienisch, Spanisch, Französisch, Portugiesisch, Russisch, Arabisch, Hindi und Chinesisch
+
+FÜR ANGEHÖRIGE
+Alle Einstellungen liegen hinter einem kleinen, per PIN geschützten Symbol: Kontakte und Fotos (auch aus dem Adressbuch), verpasste und blockierte Anrufe mit „Zurückrufen“-Taste, schneller Zugriff auf Nachrichten, Sprache, Design und Bildschirm.
+
+DATENSCHUTZ
+Die App nutzt kein Internet, enthält keine Werbung und sammelt keine Daten: Kontakte, Fotos und Einstellungen bleiben auf dem Telefon.
+
+Damit alles funktioniert, muss Einfaches Telefon als Standard-Telefon-App und als Startbildschirm eingerichtet werden – die geführte Einrichtung ist in den Einstellungen.

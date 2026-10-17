@@ -1,0 +1,23 @@
+Teléfono Sencillo convierte un smartphone Android en un teléfono facilísimo, pensado para personas mayores o con demencia y para quienes las cuidan.
+
+Una sola pantalla que nunca cambia: la hora y la fecha en grande y las fotos de los seres queridos. Basta con tocar una foto y la llamada empieza, ya en manos libres.
+
+QUÉ HACE
+• Sustituye la pantalla de inicio y la app de teléfono: sin iconos, menús ni apps en las que perderse
+• Contactos con fotos grandes: un toque y se llama (los toques dobles se ignoran)
+• Manos libres siempre activado, en llamadas salientes y entrantes
+• Llamada entrante a pantalla completa: foto, nombre y dos botones enormes, «Contestar» y «Colgar»
+• Si ya está al teléfono, quien llama oye ocupado
+• Bloqueo de llamadas: lista negra, o solo contactos y números autorizados; bloqueo de números privados
+• Teclado numérico grande, que se puede desactivar
+• Pantalla siempre encendida y brillo ajustable; el botón de encendido se puede ignorar
+• Tema claro u oscuro, en vertical y en horizontal
+• 10 idiomas: español, inglés, italiano, francés, alemán, portugués, ruso, árabe, hindi y chino
+
+PARA LA FAMILIA
+Los ajustes están detrás de un pequeño icono protegido con PIN: contactos y fotos (también desde la agenda), llamadas perdidas y bloqueadas con el botón «Devolver llamada», acceso rápido a los mensajes, idioma, tema y pantalla.
+
+PRIVACIDAD
+La app no usa Internet, no tiene publicidad y no recoge datos: contactos, fotos y ajustes se quedan solo en el teléfono.
+
+Para funcionar, Teléfono Sencillo debe configurarse como app de teléfono predeterminada y como pantalla de inicio: la configuración guiada está en los ajustes.

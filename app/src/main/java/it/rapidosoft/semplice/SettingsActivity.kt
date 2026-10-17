@@ -342,7 +342,7 @@ private fun MainSettings(
                     Icon(Icons.Filled.Sms, null); Spacer(Modifier.width(8.dp))
                     Text(stringResource(R.string.sms_open_app), fontSize = 18.sp)
                 }
-                if (!SmsBox.canRead(context)) {
+                if (!BuildConfig.STORE_BUILD && !SmsBox.canRead(context)) {
                     OutlinedButton(
                         onClick = { smsPermLauncher.launch(Manifest.permission.READ_SMS) },
                         modifier = Modifier.fillMaxWidth(),
@@ -536,7 +536,8 @@ private fun MainSettings(
                     onClick = { context.startActivity(Intent(AndroidSettings.ACTION_SETTINGS)) },
                     modifier = Modifier.fillMaxWidth(),
                 ) { Text(stringResource(R.string.open_android_settings)) }
-                Button(
+                // Niente link a pagamenti esterni nella versione Play Store (policy di Google).
+                if (!BuildConfig.STORE_BUILD) Button(
                     onClick = {
                         runCatching {
                             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://buymeacoffee.com/faxioman")))

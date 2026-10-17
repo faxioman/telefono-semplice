@@ -3,18 +3,21 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("app.cash.paparazzi")
+    id("com.github.triplet.play")
 }
 
 android {
     namespace = "it.rapidosoft.semplice"
-    compileSdk = 35
+    // Paparazzi 1.x (screenshot) non regge android.jar 36: per i soli screenshot si compila
+    // contro la 35 con -PscreenshotSdk=35. Il codice non usa API della 36.
+    compileSdk = (findProperty("screenshotSdk") as String?)?.toInt() ?: 36
 
     defaultConfig {
         applicationId = "it.rapidosoft.semplice"
         minSdk = 29
-        targetSdk = 35
-        versionCode = 4
-        versionName = "0.4.0"
+        targetSdk = 36
+        versionCode = 5
+        versionName = "0.5.0"
     }
 
     // Chiave di firma (anche per il Play Store): mai nel repo, arriva da variabili
@@ -31,6 +34,25 @@ android {
         }
     }
 
+    // full = versione GitHub (SMS nelle impostazioni, link donazioni);
+    // play = versione Play Store, senza ciò che le policy di Google non ammettono.
+    flavorDimensions += "distribution"
+    productFlavors {
+        create("full") {
+            dimension = "distribution"
+            buildConfigField("boolean", "STORE_BUILD", "false")
+        }
+        create("play") {
+            dimension = "distribution"
+            buildConfigField("boolean", "STORE_BUILD", "true")
+        }
+    }
+
+    playConfigs {
+        // la versione GitHub non va mai sul Play Store
+        register("full") { enabled.set(false) }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -44,7 +66,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions { jvmTarget = "17" }
-    buildFeatures { compose = true }
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
     androidResources { generateLocaleConfig = true }
 }
 
@@ -61,4 +86,16 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
 
     testImplementation("junit:junit:4.13.2")
+}
+
+// Pubblicazione sul Play Store (solo flavor "play"): scheda e grafica in src/play/play/.
+// Attivo solo con le credenziali (CI di pubblicazione): le build normali non toccano Google.
+val playCredentials: String? = System.getenv("PLAY_SERVICE_ACCOUNT_JSON")
+play {
+    enabled.set(playCredentials != null)
+    playCredentials?.let { serviceAccountCredentials.set(file(it)) }
+    defaultToAppBundles.set(true)
+    track.set("internal")
+    // versionCode = ultimo presente sul Play Store + 1
+    resolutionStrategy.set(com.github.triplet.gradle.androidpublisher.ResolutionStrategy.AUTO)
 }

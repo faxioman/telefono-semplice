@@ -1,0 +1,1 @@
+First release: simplified launcher and phone app, always-on speakerphone, call blocking, 10 languages.

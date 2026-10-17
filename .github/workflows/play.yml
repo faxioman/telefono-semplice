@@ -1,0 +1,52 @@
+name: Play Store
+
+# Avvio manuale: Actions → "Play Store" → Run workflow.
+on:
+  workflow_dispatch:
+    inputs:
+      track:
+        description: "Canale: internal = test interno, alpha = test chiuso, beta = test aperto, production"
+        type: choice
+        default: internal
+        options: [internal, alpha, beta, production]
+      listing:
+        description: "Aggiorna anche la scheda dello store (testi e immagini)"
+        type: boolean
+        default: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Chiave di firma e credenziali Play dai secrets
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          PLAY_SERVICE_ACCOUNT: ${{ secrets.PLAY_SERVICE_ACCOUNT }}
+        run: |
+          for s in KEYSTORE_BASE64 PLAY_SERVICE_ACCOUNT; do
+            if [ -z "${!s}" ]; then echo "::error::Secret $s mancante (vedi docs/PLAY_STORE.md)."; exit 1; fi
+          done
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+          printf '%s' "$PLAY_SERVICE_ACCOUNT" > "$RUNNER_TEMP/play.json"
+          echo "SIGNING_KEYSTORE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+          echo "PLAY_SERVICE_ACCOUNT_JSON=$RUNNER_TEMP/play.json" >> "$GITHUB_ENV"
+
+      - name: Pubblica
+        env:
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+        run: |
+          TASKS=""
+          if [ "${{ inputs.listing }}" = "true" ]; then TASKS="publishPlayReleaseListing"; fi
+          # --track si applica al task che lo precede (il bundle)
+          ./gradlew $TASKS publishPlayReleaseBundle --track "${{ inputs.track }}"

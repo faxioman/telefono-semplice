@@ -4,3 +4,7 @@ local.properties
 *.iml
 .idea/
 dist/
+play-service-account.json
+*.jks
+# copie generate da StoreAssetsTest: le immagini vere sono in app/src/play/play/
+app/src/test/snapshots/images/*StoreAssetsTest*

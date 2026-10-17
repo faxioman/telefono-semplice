@@ -4,6 +4,12 @@
 
 App Android pensata per persone anziane con demenza: **sostituisce sia la schermata Home sia l'app Telefono** del dispositivo.
 
+## Schermate
+
+<p><img src="app/src/play/play/listings/it-IT/graphics/phone-screenshots/1.png" width="160" alt=""> <img src="app/src/play/play/listings/it-IT/graphics/phone-screenshots/2.png" width="160" alt=""> <img src="app/src/play/play/listings/it-IT/graphics/phone-screenshots/3.png" width="160" alt=""> <img src="app/src/play/play/listings/it-IT/graphics/phone-screenshots/4.png" width="160" alt=""> <img src="app/src/play/play/listings/it-IT/graphics/phone-screenshots/5.png" width="160" alt=""></p>
+
+<p><img src="app/src/test/snapshots/images/it.rapidosoft.semplice_ScreenshotsTest_incomingCallLandscape.png" width="420" alt="Chiamata in arrivo in orizzontale"></p>
+
 ## Funzioni
 
 | Funzione | Come è fatta |
@@ -36,7 +42,7 @@ App Android pensata per persone anziane con demenza: **sostituisce sia la scherm
 
 ## Scaricare l'APK
 
-A ogni push su `main` la CI compila l'APK e il bundle per il Play Store (`.aab`) e li allega alla Release della versione corrente.
+A ogni push su `main` la CI compila l'APK (versione GitHub) e il bundle per il Play Store (`TelefonoSemplice-play.aab`) e li allega alla Release della versione corrente.
 APK più recente: https://github.com/faxioman/telefono-semplice/releases/latest/download/TelefonoSemplice.apk
 
 ## Firma
@@ -52,13 +58,23 @@ La chiave non sta nel repository. La CI la legge da questi GitHub Secrets (*Sett
 
 In locale si usano le variabili d'ambiente `SIGNING_KEYSTORE` (percorso del file), `SIGNING_STORE_PASSWORD`, `SIGNING_KEY_ALIAS` e `SIGNING_KEY_PASSWORD`. Se mancano, la release viene firmata con la chiave di debug.
 
+## Play Store
+
+La scheda (10 lingue, icona, grafica, screenshot) è in `app/src/play/play/` e la pubblica il workflow **Play Store**. I passaggi manuali da fare una volta e le risposte ai moduli della Play Console sono in [docs/PLAY_STORE.md](docs/PLAY_STORE.md). Privacy policy: [docs/privacy-policy.html](docs/privacy-policy.html).
+
 ## Compilare
 
+Due versioni (*flavor*):
+- `full` è quella distribuita su GitHub;
+- `play` è quella per il Play Store: niente lettura SMS e niente link per le donazioni, che le regole di Google non ammettono.
+
 ```
-./gradlew assembleRelease        # APK in app/build/outputs/apk/release/
-./gradlew testDebugUnitTest      # test logica numeri
-./gradlew recordPaparazziDebug   # screenshot in app/src/test/snapshots/images/
+./gradlew assembleFullRelease                               # APK GitHub: app/build/outputs/apk/full/release/
+./gradlew bundlePlayRelease                                 # AAB Play Store: app/build/outputs/bundle/playRelease/
+./gradlew -PscreenshotSdk=35 testFullDebugUnitTest          # test
+./gradlew -PscreenshotSdk=35 recordPaparazziFullDebug       # screenshot in app/src/test/snapshots/images/
 ```
+`-PscreenshotSdk=35` serve perché Paparazzi non supporta ancora la API 36.
 Le stringhe si rigenerano con `python3 tools_gen_strings.py` (le traduzioni sono dentro lo script).
 
 ## Limiti noti
@@ -66,7 +82,6 @@ Le stringhe si rigenerano con `python3 tools_gen_strings.py` (le traduzioni sono
 - Le chiamate perse si vedono solo nelle impostazioni: niente notifica e niente segreteria.
 - Rifiutare la seconda chiamata dall'app dà "occupato" oppure la manda in segreteria, a seconda dell'operatore. Con l'avviso di chiamata disattivato (`#43#`) l'occupato è garantito.
 - Su Android 13 e successivi, per un'app installata da APK il permesso SMS può essere "limitato". Il telefono lo segnala e va sbloccato da Info app → ⋮ → *Consenti impostazioni limitate*. Il tasto "Apri l'app Messaggi" funziona comunque.
-- Il permesso SMS non è ammesso sul Play Store per un'app che non è l'app SMS predefinita: per pubblicarla andrebbe tolto, lasciando solo il tasto.
 - Nessuna tastiera durante la chiamata per i menu automatici ("premi 1…"): scelta voluta.
 
 ---

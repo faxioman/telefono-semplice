@@ -1,0 +1,23 @@
+Téléphone Simple transforme un smartphone Android en un téléphone très facile, conçu pour les personnes âgées ou atteintes de démence, et pour les proches qui s'en occupent.
+
+Un seul écran, toujours identique : l'heure et la date en grand et les photos des êtres chers. Il suffit de toucher une photo pour appeler, directement en haut-parleur.
+
+CE QU'IL FAIT
+• Remplace l'écran d'accueil et l'application Téléphone : pas d'icônes, de menus ni d'applis où se perdre
+• Contacts avec de grandes photos : un toucher et l'appel part (les doubles touchers sont ignorés)
+• Haut-parleur toujours activé, pour les appels sortants et entrants
+• Appel entrant en plein écran : photo, nom et deux énormes boutons, « Répondre » et « Raccrocher »
+• Si un appel est déjà en cours, le second appelant entend occupé
+• Blocage d'appels : liste noire, ou seulement les contacts et numéros autorisés ; blocage des numéros masqués
+• Grand clavier numérique, désactivable
+• Écran toujours allumé et luminosité réglable ; le bouton marche/arrêt peut être ignoré
+• Thème clair ou sombre, en portrait et en paysage
+• 10 langues : français, anglais, italien, espagnol, allemand, portugais, russe, arabe, hindi et chinois
+
+POUR LA FAMILLE
+Les réglages se trouvent derrière une petite icône protégée par un code PIN : contacts et photos (aussi depuis le répertoire), appels manqués et bloqués avec le bouton « Rappeler », accès rapide aux messages, langue, thème et écran.
+
+CONFIDENTIALITÉ
+L'application n'utilise pas Internet, ne contient pas de publicité et ne collecte aucune donnée : contacts, photos et réglages restent sur le téléphone.
+
+Pour fonctionner, Téléphone Simple doit être défini comme application Téléphone par défaut et comme écran d'accueil : la configuration guidée se trouve dans les réglages.

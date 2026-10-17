@@ -1,0 +1,23 @@
+O Telefone Simples transforma um smartphone Android num telefone facílimo, pensado para pessoas idosas ou com demência e para quem cuida delas.
+
+Um único ecrã, sempre igual: a hora e a data em letra grande e as fotos das pessoas queridas. Basta tocar numa foto e a chamada começa, já em alta voz.
+
+O QUE FAZ
+• Substitui o ecrã inicial e a app de telefone: sem ícones, menus ou apps onde se perder
+• Contactos com fotos grandes: um toque e liga (toques duplos acidentais são ignorados)
+• Alta voz sempre ativa, nas chamadas feitas e recebidas
+• Chamada recebida em ecrã inteiro: foto, nome e dois botões enormes, «Atender» e «Desligar»
+• Se já estiver ao telefone, quem liga ouve sinal de ocupado
+• Bloqueio de chamadas: lista negra, ou apenas contactos e números autorizados; bloqueio de números privados
+• Teclado numérico grande, que pode ser desativado
+• Ecrã sempre ligado e brilho ajustável; o botão de ligar pode ser ignorado
+• Tema claro ou escuro, na vertical e na horizontal
+• 10 idiomas: português, inglês, italiano, espanhol, francês, alemão, russo, árabe, hindi e chinês
+
+PARA A FAMÍLIA
+As definições estão atrás de um pequeno ícone protegido por PIN: contactos e fotos (também da agenda), chamadas perdidas e bloqueadas com o botão «Ligar de volta», acesso rápido às mensagens, idioma, tema e ecrã.
+
+PRIVACIDADE
+A app não usa a Internet, não tem publicidade e não recolhe dados: contactos, fotos e definições ficam apenas no telefone.
+
+Para funcionar, o Telefone Simples deve ser definido como app de telefone predefinida e como ecrã inicial: a configuração guiada está nas definições.

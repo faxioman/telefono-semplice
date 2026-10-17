@@ -9,8 +9,6 @@
     <uses-permission android:name="android.permission.TURN_SCREEN_ON" />
     <!-- Facoltativo: per prendere la foto quando si aggiunge un contatto dalla rubrica -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <!-- Facoltativo: solo per mostrare gli ultimi SMS nelle impostazioni -->
-    <uses-permission android:name="android.permission.READ_SMS" />
 
     <uses-feature android:name="android.hardware.telephony" android:required="true" />
 

@@ -1,0 +1,23 @@
+Simple Phone turns an Android smartphone into a very easy phone, designed for elderly people or people living with dementia, and for the family members who look after them.
+
+One single screen that never changes: the time and date in large print and the photos of loved ones. Tap a photo and the call starts, already on speakerphone.
+
+WHAT IT DOES
+• Replaces the home screen and the phone app: no icons, menus or apps to get lost in
+• Contacts with big photos: one tap to call (accidental double taps are ignored)
+• Speakerphone always on, for outgoing and incoming calls
+• Full-screen incoming call: photo, name and two huge buttons, "Answer" and "Hang up"
+• If a call is already in progress, a second caller gets a busy signal
+• Call blocking: blacklist, or only contacts and allowed numbers; block private numbers
+• Big numeric keypad, which can be turned off
+• Screen always on and adjustable brightness; the power button can be ignored
+• Light or dark theme, portrait and landscape
+• 10 languages: English, Italian, Spanish, French, German, Portuguese, Russian, Arabic, Hindi and Chinese
+
+FOR THE FAMILY
+All settings sit behind a small PIN-protected icon: contacts and photos (also from the address book), missed and blocked calls with a "Call back" button, quick access to messages, language, theme and screen.
+
+PRIVACY
+The app does not use the Internet, has no ads and collects no data: contacts, photos and settings stay on the phone.
+
+To work, Simple Phone must be set as the default phone app and as the home screen: the guided setup is in the settings.

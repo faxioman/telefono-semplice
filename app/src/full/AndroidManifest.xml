@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- Solo versione GitHub: Google Play ammette READ_SMS solo per l'app SMS predefinita.
+         Serve a mostrare gli ultimi SMS nelle impostazioni. La telefonia è già dichiarata
+         obbligatoria nel manifest principale (il lint qui non la vede). -->
+    <uses-permission
+        android:name="android.permission.READ_SMS"
+        tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
+</manifest>

@@ -1,0 +1,23 @@
+Telefono Semplice trasforma uno smartphone Android in un telefono facilissimo, pensato per persone anziane o con demenza e per chi se ne prende cura.
+
+Una sola schermata, sempre uguale: l'ora e la data in grande e le foto delle persone care. Basta toccare una foto e la chiamata parte, già in vivavoce.
+
+COSA FA
+• Sostituisce la schermata Home e l'app Telefono: niente icone, menu o app in cui perdersi
+• Contatti con foto grandi: un tocco e si chiama (i doppi tocchi vengono ignorati)
+• Vivavoce sempre attivo, sia in uscita che in arrivo
+• Chiamata in arrivo a tutto schermo: foto, nome e due bottoni enormi, «Rispondi» e «Butta giù»
+• Se è già al telefono, chi chiama trova occupato
+• Blocco chiamate: lista nera, oppure solo contatti e numeri autorizzati; blocco dei numeri privati
+• Tastiera numerica grande, disattivabile
+• Schermo sempre acceso e luminosità regolabile; il tasto di accensione può essere ignorato
+• Tema chiaro o scuro, in verticale e in orizzontale
+• 10 lingue: italiano, inglese, spagnolo, francese, tedesco, portoghese, russo, arabo, hindi e cinese
+
+PER IL FAMILIARE
+Le impostazioni sono dietro una piccola icona protetta da codice PIN: contatti e foto (anche dalla rubrica), chiamate perse e bloccate con il tasto «Richiama», accesso rapido ai messaggi, lingua, tema e schermo.
+
+PRIVACY
+L'app non usa Internet, non ha pubblicità e non raccoglie dati: contatti, foto e impostazioni restano solo sul telefono.
+
+Per funzionare, Telefono Semplice va impostata come app Telefono predefinita e come schermata Home: la configurazione guidata è nelle impostazioni.

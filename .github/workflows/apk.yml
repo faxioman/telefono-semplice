@@ -32,22 +32,27 @@ jobs:
           echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
           echo "SIGNING_KEYSTORE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
 
-      - name: Test e build
+      - name: Test
+        # gli screenshot (Paparazzi) si compilano contro la API 35, vedi app/build.gradle.kts
+        run: ./gradlew -PscreenshotSdk=35 testFullDebugUnitTest
+
+      - name: Build
         env:
           SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
-        run: ./gradlew testDebugUnitTest assembleRelease bundleRelease
+        run: ./gradlew assembleFullRelease bundlePlayRelease
 
       - name: Pubblica nella Release della versione
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           VERSION=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)
-          cp app/build/outputs/apk/release/app-release.apk TelefonoSemplice.apk
-          cp app/build/outputs/bundle/release/app-release.aab TelefonoSemplice.aab
+          # APK = versione GitHub; AAB = versione Play Store (per il primo caricamento manuale)
+          cp app/build/outputs/apk/full/release/app-full-release.apk TelefonoSemplice.apk
+          cp app/build/outputs/bundle/playRelease/app-play-release.aab TelefonoSemplice-play.aab
           if ! gh release view "v$VERSION" >/dev/null 2>&1; then
             gh release create "v$VERSION" --title "v$VERSION" --target "$GITHUB_SHA" \
               --notes "Compilato automaticamente da main."
           fi
-          gh release upload "v$VERSION" TelefonoSemplice.apk TelefonoSemplice.aab --clobber
+          gh release upload "v$VERSION" TelefonoSemplice.apk TelefonoSemplice-play.aab --clobber

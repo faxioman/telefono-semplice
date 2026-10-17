@@ -1,0 +1,1 @@
+Primera versión: pantalla de inicio y teléfono simplificados, manos libres siempre activo, bloqueo de llamadas, 10 idiomas.

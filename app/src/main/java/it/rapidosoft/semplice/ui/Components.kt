@@ -40,9 +40,16 @@ private val avatarColors = listOf(
     Color(0xFFE65100), Color(0xFF4E342E), Color(0xFF37474F), Color(0xFF283593),
 )
 
-fun initials(name: String): String =
-    name.trim().split(Regex("\\s+")).filter { it.isNotEmpty() }.take(2)
-        .joinToString("") { it.first().uppercase() }.ifEmpty { "?" }
+fun initials(name: String): String {
+    val words = name.trim().split(Regex("\\s+")).filter { it.isNotEmpty() }
+    if (words.isEmpty()) return "?"
+    // Due iniziali solo negli alfabeti dove si usa (latino, cirillico, greco);
+    // in arabo, hindi, cinese... una lettera sola.
+    val script = Character.UnicodeScript.of(words[0].codePointAt(0))
+    val pair = script == Character.UnicodeScript.LATIN || script == Character.UnicodeScript.CYRILLIC ||
+        script == Character.UnicodeScript.GREEK
+    return words.take(if (pair) 2 else 1).joinToString("") { String(Character.toChars(it.codePointAt(0))).uppercase() }
+}
 
 /** Foto del contatto o, se manca, le iniziali su sfondo colorato. */
 @Composable

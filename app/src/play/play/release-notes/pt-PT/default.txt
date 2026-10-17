@@ -1,0 +1,1 @@
+Primeira versão: ecrã inicial e telefone simplificados, alta voz sempre ativa, bloqueio de chamadas, 10 idiomas.
