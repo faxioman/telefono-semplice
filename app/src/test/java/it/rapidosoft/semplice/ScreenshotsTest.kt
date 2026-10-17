@@ -2,6 +2,7 @@ package it.rapidosoft.semplice
 
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
+import com.android.resources.ScreenOrientation
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.unit.dp
 import it.rapidosoft.semplice.data.Contact
@@ -86,6 +87,43 @@ class ScreenshotsTest {
         SempliceTheme(dark = true) {
             CallContent("Ti sta chiamando", true, "Giulia", null, CallMode.RINGING, null, {}, {}, {})
         }
+    }
+
+    private fun landscape() {
+        val p = DeviceConfig.PIXEL_5
+        paparazzi.unsafeUpdateConfig(
+            p.copy(screenWidth = p.screenHeight, screenHeight = p.screenWidth,
+                orientation = ScreenOrientation.LANDSCAPE, locale = "it")
+        )
+    }
+
+    @Test fun homeLandscape() {
+        landscape()
+        paparazzi.snapshot {
+            SempliceTheme(dark = false) {
+                HomeContent(contacts, showKeypad = true, callInProgress = false, setupNeeded = false,
+                    onContact = {}, onKeypad = {}, onReturnToCall = {}, onSettings = {}, now = now)
+            }
+        }
+    }
+
+    @Test fun incomingCallLandscape() {
+        landscape()
+        paparazzi.snapshot {
+            SempliceTheme(dark = false) {
+                CallContent("Ti sta chiamando", true, "Giulia", null, CallMode.RINGING, null, {}, {}, {})
+            }
+        }
+    }
+
+    @Test fun keypadLandscape() {
+        landscape()
+        paparazzi.snapshot { SempliceTheme(dark = false) { KeypadScreen("0612345678") {} } }
+    }
+
+    @Test fun pinLandscape() {
+        landscape()
+        paparazzi.snapshot { SempliceTheme(dark = false) { PinPad("Inserisci il codice", {}, { false }, "Codice errato") {} } }
     }
 
     @Test fun pin() = paparazzi.snapshot {

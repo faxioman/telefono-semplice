@@ -261,6 +261,43 @@ T["ar"] += ["المظهر", "فاتح", "داكن"]
 T["hi"] += ["रूप", "हल्का", "गहरा"]
 T["zh"] += ["外观", "浅色", "深色"]
 
+# --- v0.4: schermo, aggiunta dalla rubrica
+KEYS += ["section_screen", "pref_keep_awake", "pref_keep_awake_hint", "brightness_title", "brightness_auto",
+         "contact_add_from_book", "contact_add_manual"]
+T[""] += ["Screen", "Never go to sleep", "The screen stays on all the time. Best to keep the phone on the charger.",
+          "Brightness", "Automatic brightness (system)", "Add from address book", "Add manually"]
+T["it"] += ["Schermo", "Non andare mai in standby", "Lo schermo resta sempre acceso. Meglio tenere il telefono in carica.",
+            "Luminosità", "Luminosità automatica (di sistema)", "Aggiungi dalla rubrica", "Aggiungi a mano"]
+T["es"] += ["Pantalla", "No suspender nunca", "La pantalla permanece siempre encendida. Mejor dejar el teléfono cargando.",
+            "Brillo", "Brillo automático (del sistema)", "Añadir desde la agenda", "Añadir a mano"]
+T["fr"] += ["Écran", "Ne jamais se mettre en veille", "L'écran reste toujours allumé. Mieux vaut laisser le téléphone en charge.",
+            "Luminosité", "Luminosité automatique (système)", "Ajouter depuis le répertoire", "Ajouter manuellement"]
+T["de"] += ["Bildschirm", "Nie in den Standby", "Der Bildschirm bleibt immer an. Das Telefon am besten am Ladegerät lassen.",
+            "Helligkeit", "Automatische Helligkeit (System)", "Aus dem Adressbuch hinzufügen", "Manuell hinzufügen"]
+T["pt"] += ["Ecrã", "Nunca entrar em espera", "O ecrã fica sempre ligado. É melhor manter o telefone a carregar.",
+            "Brilho", "Brilho automático (do sistema)", "Adicionar da agenda", "Adicionar manualmente"]
+T["ru"] += ["Экран", "Никогда не засыпать", "Экран всегда включён. Лучше держать телефон на зарядке.",
+            "Яркость", "Автояркость (системная)", "Добавить из телефонной книги", "Добавить вручную"]
+T["ar"] += ["الشاشة", "عدم الدخول في وضع السكون أبدًا", "تبقى الشاشة مضاءة دائمًا. يُفضّل إبقاء الهاتف على الشاحن.",
+            "السطوع", "سطوع تلقائي (النظام)", "إضافة من دفتر العناوين", "إضافة يدويًا"]
+T["hi"] += ["स्क्रीन", "कभी स्लीप मोड में न जाए", "स्क्रीन हमेशा चालू रहेगी। फ़ोन को चार्जर पर रखना बेहतर है।",
+            "चमक", "स्वचालित चमक (सिस्टम)", "फ़ोन बुक से जोड़ें", "हाथ से जोड़ें"]
+T["zh"] += ["屏幕", "永不休眠", "屏幕将始终亮着，建议让手机保持充电。",
+            "亮度", "自动亮度（系统）", "从通讯录添加", "手动添加"]
+
+# --- v0.4: tasto accensione
+KEYS += ["pref_wake_on_power", "pref_wake_on_power_hint"]
+T[""] += ["Ignore the power button", "If the power button is pressed, the screen turns back on by itself. Holding the button still turns the phone off."]
+T["it"] += ["Ignora il tasto di accensione", "Se viene premuto il tasto di accensione, lo schermo si riaccende da solo. Tenendolo premuto si può comunque spegnere il telefono."]
+T["es"] += ["Ignorar el botón de encendido", "Si se pulsa el botón de encendido, la pantalla vuelve a encenderse sola. Manteniéndolo pulsado se puede apagar el teléfono."]
+T["fr"] += ["Ignorer le bouton marche/arrêt", "Si le bouton marche/arrêt est pressé, l'écran se rallume tout seul. Un appui long permet toujours d'éteindre le téléphone."]
+T["de"] += ["Ein-/Aus-Taste ignorieren", "Wird die Ein-/Aus-Taste gedrückt, schaltet sich der Bildschirm von selbst wieder ein. Langes Drücken schaltet das Telefon weiterhin aus."]
+T["pt"] += ["Ignorar o botão de ligar", "Se o botão de ligar for premido, o ecrã volta a acender-se sozinho. Mantendo-o premido continua a ser possível desligar o telefone."]
+T["ru"] += ["Игнорировать кнопку питания", "Если нажать кнопку питания, экран сам включится снова. Долгим нажатием телефон по-прежнему можно выключить."]
+T["ar"] += ["تجاهل زر التشغيل", "عند الضغط على زر التشغيل تعود الشاشة للعمل تلقائيًا. يمكن إيقاف الهاتف بالضغط المطوّل على الزر."]
+T["hi"] += ["पावर बटन को अनदेखा करें", "पावर बटन दबाने पर स्क्रीन अपने-आप फिर चालू हो जाएगी। बटन देर तक दबाकर फ़ोन फिर भी बंद किया जा सकता है।"]
+T["zh"] += ["忽略电源键", "按下电源键后屏幕会自动重新亮起。长按电源键仍可关机。"]
+
 def esc(s):
     s = escape(s).replace("'", "\\'").replace('"', '\\"').replace("\n", "\\n")
     if s.startswith("@") or s.startswith("?"): s = "\\" + s

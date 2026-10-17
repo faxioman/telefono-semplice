@@ -7,6 +7,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.util.LruCache
 import java.io.File
+import java.nio.ByteBuffer
 
 object Photos {
     private const val MAX_SIDE = 900
@@ -23,8 +24,13 @@ object Photos {
     }
 
     /** Copia (ridimensionata) un'immagine scelta dall'utente nella memoria privata dell'app. */
-    fun import(context: Context, uri: Uri): String? = runCatching {
-        val source = ImageDecoder.createSource(context.contentResolver, uri)
+    fun import(context: Context, uri: Uri): String? =
+        save(context, ImageDecoder.createSource(context.contentResolver, uri))
+
+    fun importBytes(context: Context, bytes: ByteArray): String? =
+        save(context, ImageDecoder.createSource(ByteBuffer.wrap(bytes)))
+
+    private fun save(context: Context, source: ImageDecoder.Source): String? = runCatching {
         val bmp = ImageDecoder.decodeBitmap(source) { decoder, info, _ ->
             val w = info.size.width
             val h = info.size.height

@@ -88,4 +88,13 @@
     <string name="section_theme">Apariencia</string>
     <string name="theme_light">Claro</string>
     <string name="theme_dark">Oscuro</string>
+    <string name="section_screen">Pantalla</string>
+    <string name="pref_keep_awake">No suspender nunca</string>
+    <string name="pref_keep_awake_hint">La pantalla permanece siempre encendida. Mejor dejar el teléfono cargando.</string>
+    <string name="brightness_title">Brillo</string>
+    <string name="brightness_auto">Brillo automático (del sistema)</string>
+    <string name="contact_add_from_book">Añadir desde la agenda</string>
+    <string name="contact_add_manual">Añadir a mano</string>
+    <string name="pref_wake_on_power">Ignorar el botón de encendido</string>
+    <string name="pref_wake_on_power_hint">Si se pulsa el botón de encendido, la pantalla vuelve a encenderse sola. Manteniéndolo pulsado se puede apagar el teléfono.</string>
 </resources>

@@ -9,7 +9,7 @@ import androidx.activity.addCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
+import it.rapidosoft.semplice.ui.SempliceActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -68,6 +69,7 @@ import it.rapidosoft.semplice.ui.Green
 import it.rapidosoft.semplice.ui.Ink
 import it.rapidosoft.semplice.ui.Muted
 import it.rapidosoft.semplice.ui.SempliceTheme
+import it.rapidosoft.semplice.ui.isLandscape
 import it.rapidosoft.semplice.ui.Amber
 import it.rapidosoft.semplice.ui.Tile
 import kotlinx.coroutines.delay
@@ -77,7 +79,7 @@ import java.time.format.FormatStyle
 import java.util.Locale
 
 /** Schermata Home (launcher): orologio, contatti con foto, tastiera, ingranaggio. */
-class MainActivity : AppCompatActivity() {
+class MainActivity : SempliceActivity() {
 
     private val permissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {}
 
@@ -87,6 +89,7 @@ class MainActivity : AppCompatActivity() {
         // È la Home: il tasto Indietro non porta da nessuna parte.
         onBackPressedDispatcher.addCallback(this) {}
         askMissingPermissions()
+        ScreenGuard.install(this)
         setContent { SempliceTheme { HomeScreen() } }
     }
 
@@ -137,16 +140,16 @@ internal fun HomeContent(
     onSettings: () -> Unit,
     now: LocalDateTime? = null,
 ) {
-    Column(Modifier.fillMaxSize().safeDrawingPadding().padding(horizontal = 16.dp)) {
-        Clock(now)
-
+    val banner: @Composable () -> Unit = {
         if (callInProgress) {
             Banner(stringResource(R.string.home_call_in_progress), Green, onReturnToCall)
         } else if (setupNeeded) {
             Banner(stringResource(R.string.home_setup_needed), Amber, onSettings)
         }
-
-        Box(Modifier.weight(1f).fillMaxWidth()) {
+    }
+    val landscape = isLandscape()
+    val grid: @Composable (Modifier) -> Unit = { modifier ->
+        Box(modifier) {
             if (contacts.isEmpty() && !showKeypad) {
                 Text(
                     stringResource(R.string.home_no_contacts),
@@ -155,28 +158,49 @@ internal fun HomeContent(
                 )
             } else {
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
+                    columns = GridCells.Fixed(if (landscape) 3 else 2),
                     contentPadding = PaddingValues(vertical = 8.dp),
                     horizontalArrangement = Arrangement.spacedBy(14.dp),
                     verticalArrangement = Arrangement.spacedBy(14.dp),
                 ) {
                     items(contacts, key = { it.id }) { c ->
-                        ContactTile(c) { onContact(c) }
+                        ContactTile(c, compact = landscape) { onContact(c) }
                     }
                     if (showKeypad) {
-                        item(key = "keypad") { KeypadTile(onKeypad) }
+                        item(key = "keypad") { KeypadTile(compact = landscape, onClick = onKeypad) }
                     }
                 }
             }
         }
+    }
 
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-            IconButton(
-                onClick = onSettings,
-                modifier = Modifier.alpha(0.35f),
-            ) {
-                Icon(Icons.Filled.Settings, stringResource(R.string.settings_title), Modifier.size(26.dp), tint = Ink)
+    if (landscape) {
+        // Orizzontale: orologio e avvisi a sinistra, contatti a destra.
+        Row(Modifier.fillMaxSize().safeDrawingPadding().padding(horizontal = 16.dp)) {
+            Column(Modifier.weight(0.38f).fillMaxHeight().padding(end = 16.dp), verticalArrangement = Arrangement.Center) {
+                Clock(now)
+                banner()
+                Spacer(Modifier.weight(1f))
+                SettingsButton(onSettings)
             }
+            grid(Modifier.weight(0.62f).fillMaxHeight())
+        }
+    } else {
+        Column(Modifier.fillMaxSize().safeDrawingPadding().padding(horizontal = 16.dp)) {
+            Clock(now)
+            banner()
+            grid(Modifier.weight(1f).fillMaxWidth())
+            SettingsButton(onSettings)
+        }
+    }
+}
+
+/** Ingranaggio piccolo e semitrasparente: per il familiare, non per l'anziano. */
+@Composable
+private fun SettingsButton(onSettings: () -> Unit) {
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+        IconButton(onClick = onSettings, modifier = Modifier.alpha(0.35f)) {
+            Icon(Icons.Filled.Settings, stringResource(R.string.settings_title), Modifier.size(26.dp), tint = Ink)
         }
     }
 }
@@ -213,8 +237,12 @@ private fun Banner(text: String, color: Color, onClick: () -> Unit) {
     }
 }
 
+// In orizzontale riquadri più bassi, così due file stanno nello schermo senza scorrere.
+private fun tileRatio(compact: Boolean) = if (compact) 4f / 3f else 1f
+private fun tileFont(compact: Boolean) = if (compact) 21.sp else 26.sp
+
 @Composable
-private fun ContactTile(contact: Contact, onClick: () -> Unit) {
+private fun ContactTile(contact: Contact, compact: Boolean, onClick: () -> Unit) {
     Card(
         onClick = onClick,
         shape = RoundedCornerShape(24.dp),
@@ -222,9 +250,9 @@ private fun ContactTile(contact: Contact, onClick: () -> Unit) {
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
     ) {
         Column(Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            ContactPhoto(contact.photo, contact.name, Modifier.fillMaxWidth().aspectRatio(1f), corner = 18.dp)
+            ContactPhoto(contact.photo, contact.name, Modifier.fillMaxWidth().aspectRatio(tileRatio(compact)), corner = 18.dp)
             Text(
-                contact.name, fontSize = 26.sp, fontWeight = FontWeight.Bold, color = Ink,
+                contact.name, fontSize = tileFont(compact), fontWeight = FontWeight.Bold, color = Ink,
                 maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 4.dp),
             )
@@ -233,7 +261,7 @@ private fun ContactTile(contact: Contact, onClick: () -> Unit) {
 }
 
 @Composable
-private fun KeypadTile(onClick: () -> Unit) {
+private fun KeypadTile(compact: Boolean, onClick: () -> Unit) {
     Card(
         onClick = onClick,
         shape = RoundedCornerShape(24.dp),
@@ -241,11 +269,11 @@ private fun KeypadTile(onClick: () -> Unit) {
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
     ) {
         Column(Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Box(Modifier.fillMaxWidth().aspectRatio(1f), contentAlignment = Alignment.Center) {
+            Box(Modifier.fillMaxWidth().aspectRatio(tileRatio(compact)), contentAlignment = Alignment.Center) {
                 Icon(Icons.Filled.Dialpad, null, Modifier.fillMaxSize(0.6f))
             }
             Text(
-                stringResource(R.string.home_keypad), fontSize = 26.sp, fontWeight = FontWeight.Bold,
+                stringResource(R.string.home_keypad), fontSize = tileFont(compact), fontWeight = FontWeight.Bold,
                 maxLines = 1, textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 4.dp),
             )

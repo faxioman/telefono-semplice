@@ -5,14 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.telecom.Call
-import android.view.WindowManager
 import androidx.activity.addCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
+import it.rapidosoft.semplice.ui.SempliceActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -53,17 +53,18 @@ import it.rapidosoft.semplice.ui.Ink
 import it.rapidosoft.semplice.ui.Muted
 import it.rapidosoft.semplice.ui.Red
 import it.rapidosoft.semplice.ui.SempliceTheme
+import it.rapidosoft.semplice.ui.isLandscape
 import kotlinx.coroutines.delay
 
 /** Chiamata in arrivo (foto grande + Butta giù / Rispondi) e chiamata in corso. */
-class CallActivity : AppCompatActivity() {
+class CallActivity : SempliceActivity() {
+    override val alwaysKeepScreenOn = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setShowWhenLocked(true)
         setTurnScreenOn(true)
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         onBackPressedDispatcher.addCallback(this) {} // non si esce per sbaglio
         handleAction(intent)
         setContent { SempliceTheme { CallScreen(onFinished = { finish() }) } }
@@ -170,21 +171,16 @@ internal fun CallContent(
     onReject: () -> Unit,
     onHangup: () -> Unit,
 ) {
-    Column(
-        Modifier.fillMaxSize().safeDrawingPadding().padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
+    val statusText: @Composable () -> Unit = {
         Text(status, fontSize = 30.sp, color = if (statusHighlighted) Accent else Muted, fontWeight = FontWeight.Bold)
-        ContactPhoto(
-            photo, name,
-            Modifier.weight(1f).fillMaxWidth().padding(vertical = 12.dp),
-            corner = 32.dp,
-        )
+    }
+    val nameText: @Composable () -> Unit = {
         Text(
             name, fontSize = 44.sp, fontWeight = FontWeight.Bold, color = Ink,
             textAlign = TextAlign.Center, maxLines = 2, overflow = TextOverflow.Ellipsis, lineHeight = 48.sp,
         )
-        val buttonsModifier = Modifier.padding(top = 16.dp).height(150.dp)
+    }
+    val buttons: @Composable (Modifier) -> Unit = { buttonsModifier ->
         when (mode) {
             CallMode.RINGING -> Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 BigButton(stringResource(R.string.call_hangup), Icons.Filled.CallEnd, Red, buttonsModifier.weight(1f)) {
@@ -202,6 +198,32 @@ internal fun CallContent(
                     if (SystemClock.elapsedRealtime() - shownAt > 800) onHangup()
                 }
             }
+        }
+    }
+
+    if (isLandscape()) {
+        // Orizzontale: foto a sinistra, stato/nome/bottoni a destra.
+        Row(Modifier.fillMaxSize().safeDrawingPadding().padding(16.dp), horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+            ContactPhoto(photo, name, Modifier.weight(1f).fillMaxHeight(), corner = 32.dp)
+            Column(
+                Modifier.weight(1f).fillMaxHeight(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween,
+            ) {
+                statusText()
+                nameText()
+                buttons(Modifier.height(130.dp))
+            }
+        }
+    } else {
+        Column(
+            Modifier.fillMaxSize().safeDrawingPadding().padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            statusText()
+            ContactPhoto(photo, name, Modifier.weight(1f).fillMaxWidth().padding(vertical = 12.dp), corner = 32.dp)
+            nameText()
+            buttons(Modifier.padding(top = 16.dp).height(150.dp))
         }
     }
 }

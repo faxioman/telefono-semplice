@@ -58,10 +58,9 @@ val Accent: Color @Composable get() = LocalPalette.current.accent
 @Composable
 fun SempliceTheme(dark: Boolean? = null, content: @Composable () -> Unit) {
     val context = LocalContext.current
-    val isDark = dark ?: run {
-        val store = remember { Store.get(context) }
-        store.settings.collectAsState().value.theme == ThemeMode.DARK
-    }
+    // dark esplicito = anteprime/test: niente preferenze né finestra da configurare
+    val settings = if (dark == null) remember { Store.get(context) }.settings.collectAsState().value else null
+    val isDark = dark ?: (settings?.theme == ThemeMode.DARK)
     val palette = if (isDark) DarkPalette else LightPalette
     val scheme = if (isDark) {
         darkColorScheme(
@@ -81,12 +80,16 @@ fun SempliceTheme(dark: Boolean? = null, content: @Composable () -> Unit) {
 
     // Barre di sistema e sfondo della finestra coerenti con il tema scelto.
     val activity = context as? ComponentActivity
-    LaunchedEffect(isDark, activity) {
+    LaunchedEffect(isDark, settings?.keepAwake, settings?.brightness, activity) {
         activity ?: return@LaunchedEffect
         val transparent = android.graphics.Color.TRANSPARENT
         val style = if (isDark) SystemBarStyle.dark(transparent) else SystemBarStyle.light(transparent, transparent)
         activity.enableEdgeToEdge(statusBarStyle = style, navigationBarStyle = style)
         activity.window.setBackgroundDrawable(ColorDrawable(palette.background.toArgb()))
+        if (activity is SempliceActivity && settings != null) {
+            activity.hideNavigationBar()
+            activity.applyScreenSettings(settings)
+        }
     }
 
     CompositionLocalProvider(LocalPalette provides palette) {

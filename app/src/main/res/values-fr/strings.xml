@@ -88,4 +88,13 @@
     <string name="section_theme">Apparence</string>
     <string name="theme_light">Clair</string>
     <string name="theme_dark">Sombre</string>
+    <string name="section_screen">Écran</string>
+    <string name="pref_keep_awake">Ne jamais se mettre en veille</string>
+    <string name="pref_keep_awake_hint">L\'écran reste toujours allumé. Mieux vaut laisser le téléphone en charge.</string>
+    <string name="brightness_title">Luminosité</string>
+    <string name="brightness_auto">Luminosité automatique (système)</string>
+    <string name="contact_add_from_book">Ajouter depuis le répertoire</string>
+    <string name="contact_add_manual">Ajouter manuellement</string>
+    <string name="pref_wake_on_power">Ignorer le bouton marche/arrêt</string>
+    <string name="pref_wake_on_power_hint">Si le bouton marche/arrêt est pressé, l\'écran se rallume tout seul. Un appui long permet toujours d\'éteindre le téléphone.</string>
 </resources>

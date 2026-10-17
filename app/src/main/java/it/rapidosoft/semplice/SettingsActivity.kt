@@ -18,7 +18,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
+import it.rapidosoft.semplice.ui.SempliceActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -38,6 +38,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
@@ -53,6 +55,8 @@ import androidx.compose.material.icons.automirrored.filled.Backspace
 import androidx.compose.material.icons.automirrored.filled.CallMissed
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Block
+import androidx.compose.material.icons.filled.BrightnessHigh
+import androidx.compose.material.icons.filled.BrightnessLow
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.CallEnd
 import androidx.compose.material.icons.filled.PhoneDisabled
@@ -72,6 +76,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -100,6 +105,8 @@ import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import it.rapidosoft.semplice.call.Dialer
 import it.rapidosoft.semplice.data.Contact
+import it.rapidosoft.semplice.data.ContactImport
+import it.rapidosoft.semplice.data.Prefill
 import it.rapidosoft.semplice.data.FilterMode
 import it.rapidosoft.semplice.data.LogEntry
 import it.rapidosoft.semplice.data.LogType
@@ -114,6 +121,7 @@ import it.rapidosoft.semplice.ui.Ink
 import it.rapidosoft.semplice.ui.Muted
 import it.rapidosoft.semplice.ui.Red
 import it.rapidosoft.semplice.ui.SempliceTheme
+import it.rapidosoft.semplice.ui.isLandscape
 import it.rapidosoft.semplice.ui.Accent
 import it.rapidosoft.semplice.ui.Amber
 import it.rapidosoft.semplice.ui.Tile
@@ -124,7 +132,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 /** Preferenze per il familiare/caregiver, protette da codice PIN. */
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : SempliceActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -172,18 +180,17 @@ internal fun PinPad(
     var entered by remember { mutableStateOf("") }
     var error by remember { mutableStateOf(false) }
     BackHandler(onBack = onBack)
-    Column(Modifier.fillMaxSize().safeDrawingPadding().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Row(Modifier.fillMaxWidth()) {
-            IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) }
-        }
+    val header: @Composable () -> Unit = {
         Text(title, fontSize = 24.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
         Text(
             if (entered.isEmpty()) " " else "●".repeat(entered.length),
             fontSize = 36.sp, modifier = Modifier.padding(16.dp),
         )
         Text(if (error) errorText else " ", color = Red, fontSize = 18.sp)
+    }
+    val keypad: @Composable (Modifier) -> Unit = { modifier ->
         val keys = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "⌫", "0", "OK")
-        Column(Modifier.weight(1f).padding(top = 16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Column(modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
             keys.chunked(3).forEach { row ->
                 Row(Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     row.forEach { k ->
@@ -210,13 +217,36 @@ internal fun PinPad(
             }
         }
     }
+    val back: @Composable () -> Unit = {
+        Row(Modifier.fillMaxWidth()) {
+            IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) }
+        }
+    }
+
+    if (isLandscape()) {
+        Row(Modifier.fillMaxSize().safeDrawingPadding().padding(16.dp), horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+            Column(Modifier.weight(1f).fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally) {
+                back()
+                Spacer(Modifier.weight(1f))
+                header()
+                Spacer(Modifier.weight(1f))
+            }
+            keypad(Modifier.weight(1.2f).fillMaxHeight())
+        }
+    } else {
+        Column(Modifier.fillMaxSize().safeDrawingPadding().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            back()
+            header()
+            keypad(Modifier.weight(1f).padding(top = 16.dp))
+        }
+    }
 }
 
 /* ---------------------------------------------------------- navigazione */
 
 private sealed interface Screen {
     data object Main : Screen
-    data class Edit(val contactId: String?) : Screen
+    data class Edit(val contactId: String?, val prefill: Prefill? = null) : Screen
     data object NewPin : Screen
 }
 
@@ -227,9 +257,10 @@ private fun SettingsNav(onClose: () -> Unit) {
         Screen.Main -> MainSettings(
             onClose = onClose,
             onEditContact = { screen = Screen.Edit(it) },
+            onNewFromBook = { screen = Screen.Edit(null, it) },
             onNewPin = { screen = Screen.NewPin },
         )
-        is Screen.Edit -> EditContact(s.contactId) { screen = Screen.Main }
+        is Screen.Edit -> EditContact(s.contactId, s.prefill) { screen = Screen.Main }
         Screen.NewPin -> NewPinFlow { screen = Screen.Main }
     }
 }
@@ -255,7 +286,12 @@ private fun NewPinFlow(onDone: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun MainSettings(onClose: () -> Unit, onEditContact: (String?) -> Unit, onNewPin: () -> Unit) {
+private fun MainSettings(
+    onClose: () -> Unit,
+    onEditContact: (String?) -> Unit,
+    onNewFromBook: (Prefill) -> Unit,
+    onNewPin: () -> Unit,
+) {
     val context = LocalContext.current
     val store = remember { Store.get(context) }
     val contacts by store.contacts.collectAsState()
@@ -274,6 +310,7 @@ private fun MainSettings(onClose: () -> Unit, onEditContact: (String?) -> Unit, 
         refresh++
     }
     val log by store.log.collectAsState()
+    val pickFromBook = rememberContactPicker(onNewFromBook)
     val sms = remember(refresh) { SmsBox.latest(context) }
 
     var addNumberTo by remember { mutableStateOf<String?>(null) } // "black" | "white"
@@ -287,7 +324,7 @@ private fun MainSettings(onClose: () -> Unit, onEditContact: (String?) -> Unit, 
             IconButton(onClick = onClose) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) }
             Text(stringResource(R.string.settings_title), fontSize = 26.sp, fontWeight = FontWeight.Bold)
         }
-        LazyColumn(Modifier.fillMaxSize(), contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp, 0.dp, 16.dp, 32.dp)) {
+        LazyColumn(Modifier.fillMaxSize().wrapContentWidth().widthIn(max = 720.dp), contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp, 0.dp, 16.dp, 32.dp)) {
             /* --- chiamate perse --- */
             section(R.string.section_log)
             if (log.isEmpty()) item { Text(stringResource(R.string.log_empty), color = Muted) }
@@ -357,8 +394,13 @@ private fun MainSettings(onClose: () -> Unit, onEditContact: (String?) -> Unit, 
                 }
             }
             item {
-                Button(onClick = { onEditContact(null) }, modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
-                    Icon(Icons.Filled.Add, null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.contact_add), fontSize = 18.sp)
+                Button(onClick = pickFromBook, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
+                    Icon(Icons.Filled.Contacts, null); Spacer(Modifier.width(8.dp))
+                    Text(stringResource(R.string.contact_add_from_book), fontSize = 18.sp)
+                }
+                OutlinedButton(onClick = { onEditContact(null) }, modifier = Modifier.fillMaxWidth()) {
+                    Icon(Icons.Filled.Add, null); Spacer(Modifier.width(8.dp))
+                    Text(stringResource(R.string.contact_add_manual))
                 }
             }
 
@@ -439,6 +481,35 @@ private fun MainSettings(onClose: () -> Unit, onEditContact: (String?) -> Unit, 
                     ) {
                         RadioButton(selected = settings.theme == mode, onClick = null)
                         Text(stringResource(label), fontSize = 17.sp, modifier = Modifier.padding(start = 8.dp))
+                    }
+                }
+            }
+
+            /* --- schermo --- */
+            section(R.string.section_screen)
+            item {
+                SwitchRow(stringResource(R.string.pref_keep_awake), settings.keepAwake) { v ->
+                    store.updateSettings { it.copy(keepAwake = v) }
+                }
+                Text(stringResource(R.string.pref_keep_awake_hint), color = Muted, fontSize = 14.sp)
+                SwitchRow(stringResource(R.string.pref_wake_on_power), settings.wakeOnPower) { v ->
+                    store.updateSettings { it.copy(wakeOnPower = v) }
+                }
+                Text(stringResource(R.string.pref_wake_on_power_hint), color = Muted, fontSize = 14.sp)
+                SwitchRow(stringResource(R.string.brightness_auto), settings.brightness < 0) { auto ->
+                    store.updateSettings { it.copy(brightness = if (auto) -1f else 0.7f) }
+                }
+                if (settings.brightness >= 0) {
+                    Text(stringResource(R.string.brightness_title), fontSize = 17.sp)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Filled.BrightnessLow, null)
+                        Slider(
+                            value = settings.brightness,
+                            onValueChange = { v -> store.updateSettings { it.copy(brightness = v) } },
+                            valueRange = 0.05f..1f,
+                            modifier = Modifier.weight(1f).padding(horizontal = 8.dp),
+                        )
+                        Icon(Icons.Filled.BrightnessHigh, null)
                     }
                 }
             }
@@ -684,15 +755,34 @@ private class PickPhoneContact : ActivityResultContract<Unit, Uri?>() {
     override fun parseResult(resultCode: Int, intent: Intent?): Uri? = intent?.data
 }
 
+/**
+ * Apre il selettore della rubrica; la prima volta chiede l'accesso ai contatti, che serve
+ * solo per la foto (senza, arrivano comunque nome e numero).
+ */
 @Composable
-private fun EditContact(contactId: String?, onDone: () -> Unit) {
+private fun rememberContactPicker(onPicked: (Prefill) -> Unit): () -> Unit {
+    val context = LocalContext.current
+    val picker = rememberLauncherForActivityResult(PickPhoneContact()) { uri ->
+        uri?.let { ContactImport.read(context, it) }?.let(onPicked)
+    }
+    val permission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
+        runCatching { picker.launch(Unit) }
+    }
+    return {
+        if (ContactImport.canReadPhotos(context)) runCatching { picker.launch(Unit) }
+        else permission.launch(Manifest.permission.READ_CONTACTS)
+    }
+}
+
+@Composable
+private fun EditContact(contactId: String?, prefill: Prefill?, onDone: () -> Unit) {
     val context = LocalContext.current
     val store = remember { Store.get(context) }
     val original = remember(contactId) { store.contacts.value.firstOrNull { it.id == contactId } }
 
-    var name by rememberSaveable { mutableStateOf(original?.name ?: "") }
-    var number by rememberSaveable { mutableStateOf(original?.number ?: "") }
-    var photo by rememberSaveable { mutableStateOf(original?.photo) }
+    var name by rememberSaveable { mutableStateOf(original?.name ?: prefill?.name.orEmpty()) }
+    var number by rememberSaveable { mutableStateOf(original?.number ?: prefill?.number.orEmpty()) }
+    var photo by rememberSaveable { mutableStateOf(original?.photo ?: prefill?.photo) }
 
     fun replacePhoto(newPath: String?) {
         // elimina la foto temporanea precedente (mai quella originale: serve se si annulla)
@@ -703,25 +793,10 @@ private fun EditContact(contactId: String?, onDone: () -> Unit) {
     val pickImage = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) Photos.import(context, uri)?.let { replacePhoto(it) }
     }
-    val pickContact = rememberLauncherForActivityResult(PickPhoneContact()) { uri ->
-        if (uri == null) return@rememberLauncherForActivityResult
-        runCatching {
-            context.contentResolver.query(
-                uri,
-                arrayOf(
-                    ContactsContract.CommonDataKinds.Phone.NUMBER,
-                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                    ContactsContract.CommonDataKinds.Phone.PHOTO_URI,
-                ),
-                null, null, null,
-            )?.use { c ->
-                if (c.moveToFirst()) {
-                    number = c.getString(0).orEmpty()
-                    if (name.isBlank()) name = c.getString(1).orEmpty()
-                    c.getString(2)?.let { Uri.parse(it) }?.let { Photos.import(context, it) }?.let { replacePhoto(it) }
-                }
-            }
-        }
+    val pickContact = rememberContactPicker { p ->
+        number = p.number
+        if (name.isBlank()) name = p.name
+        p.photo?.let { replacePhoto(it) }
     }
 
     fun cancel() {
@@ -741,7 +816,10 @@ private fun EditContact(contactId: String?, onDone: () -> Unit) {
                 fontSize = 24.sp, fontWeight = FontWeight.Bold,
             )
         }
-        ContactPhoto(photo, name, Modifier.fillMaxWidth(0.6f).aspectRatio(1f).align(Alignment.CenterHorizontally))
+        ContactPhoto(
+            photo, name,
+            Modifier.fillMaxWidth(0.6f).widthIn(max = 240.dp).aspectRatio(1f).align(Alignment.CenterHorizontally),
+        )
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Button(
                 onClick = { pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) },
@@ -753,7 +831,7 @@ private fun EditContact(contactId: String?, onDone: () -> Unit) {
                 }
             }
         }
-        OutlinedButton(onClick = { runCatching { pickContact.launch(Unit) } }, modifier = Modifier.fillMaxWidth()) {
+        OutlinedButton(onClick = pickContact, modifier = Modifier.fillMaxWidth()) {
             Icon(Icons.Filled.Contacts, null); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.contact_import))
         }
         OutlinedTextField(

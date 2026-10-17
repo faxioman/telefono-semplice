@@ -7,12 +7,15 @@ App Android pensata per persone anziane con demenza: **sostituisce sia la scherm
 | Funzione | Come è fatta |
 |---|---|
 | Launcher | `MainActivity` risponde a `CATEGORY_HOME`: orologio grande con data, griglia di contatti con foto, il tasto Indietro non fa nulla |
-| Contatti con foto e chiamata immediata | Un tocco sulla foto avvia subito la chiamata (`TelecomManager.placeCall`). I doppi tocchi entro 4 s vengono ignorati |
+| Contatti con foto e chiamata immediata | Un tocco sulla foto avvia subito la chiamata (`TelecomManager.placeCall`). I doppi tocchi entro 4 s vengono ignorati. Si aggiungono dalla rubrica, con la foto del contatto in alta risoluzione (sostituibile), oppure a mano |
 | Sempre vivavoce | La chiamata parte con `EXTRA_START_CALL_WITH_SPEAKERPHONE`, poi `PhoneInCallService` rimette l'audio sull'altoparlante a ogni cambio di instradamento |
 | Lista nera / lista bianca | `ScreeningService` (`CallScreeningService`) rifiuta la chiamata prima che squilli. Il controllo viene ripetuto in `PhoneInCallService` come rete di sicurezza. Modalità: accetta tutte · blocca lista nera · solo contatti + lista bianca. Opzione per bloccare i numeri privati |
 | Tastierone | `KeypadActivity`, disattivabile dalle preferenze. Gestisce anche `ACTION_DIAL` (requisito per essere app Telefono predefinita) |
 | Preferenze protette | Ingranaggio semitrasparente in basso a destra. PIN da 4–8 cifre (all'inizio nessun PIN: va impostato) |
 | Chiamata in arrivo | Foto a tutto schermo, nome grande, bottoni **Butta giù** / **Rispondi**. Funziona anche a schermo bloccato grazie a una notifica full-screen `CallStyle` |
+| Schermo | Opzioni "non andare mai in standby" e luminosità dell'app (fissa o di sistema). La barra di navigazione di Android è sempre nascosta |
+| Tasto di accensione | Opzione "ignora il tasto di accensione": il tasto non si può intercettare, quindi lo schermo viene riacceso subito sulla Home. La pressione lunga spegne ancora il telefono |
+| Verticale e orizzontale | In orizzontale la chiamata mostra la foto a sinistra e i bottoni a destra |
 | Tema | Chiaro o scuro, dalle impostazioni (sezione *Aspetto*). Verde e rosso dei bottoni restano uguali nei due temi |
 | Lingue | it, en, es, fr, de, pt, ru, ar, hi, zh. Si sceglie dalle preferenze, oppure segue la lingua del sistema |
 | Chiamate perse | Elenco nelle impostazioni (perse, buttate giù, bloccate, occupato) con tasto "Richiama". Lo tiene l'app, quindi non servono permessi |
@@ -63,3 +66,7 @@ Le stringhe si rigenerano con `python3 tools_gen_strings.py` (le traduzioni sono
 - Su Android 13 e successivi, per un'app installata da APK il permesso SMS può essere "limitato". Il telefono lo segnala e va sbloccato da Info app → ⋮ → *Consenti impostazioni limitate*. Il tasto "Apri l'app Messaggi" funziona comunque.
 - Il permesso SMS non è ammesso sul Play Store per un'app che non è l'app SMS predefinita: per pubblicarla andrebbe tolto, lasciando solo il tasto.
 - Nessuna tastiera durante la chiamata per i menu automatici ("premi 1…"): scelta voluta.
+
+---
+
+Fatto con ❤️ e con Claude Opus 5.5 a sforzo **medio**. Sì, medio: il massimo lo teniamo per quando la nonna chiederà le videochiamate.

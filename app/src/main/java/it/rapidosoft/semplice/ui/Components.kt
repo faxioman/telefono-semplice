@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -84,6 +85,13 @@ fun BigButton(
             Text(text, fontSize = 28.sp, fontWeight = FontWeight.Bold, maxLines = 1)
         }
     }
+}
+
+/** Schermo più largo che alto (telefono in orizzontale). */
+@Composable
+fun isLandscape(): Boolean {
+    val c = LocalConfiguration.current
+    return c.screenWidthDp > c.screenHeightDp
 }
 
 @Composable

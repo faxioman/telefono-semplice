@@ -88,4 +88,13 @@
     <string name="section_theme">Aspetto</string>
     <string name="theme_light">Chiaro</string>
     <string name="theme_dark">Scuro</string>
+    <string name="section_screen">Schermo</string>
+    <string name="pref_keep_awake">Non andare mai in standby</string>
+    <string name="pref_keep_awake_hint">Lo schermo resta sempre acceso. Meglio tenere il telefono in carica.</string>
+    <string name="brightness_title">Luminosità</string>
+    <string name="brightness_auto">Luminosità automatica (di sistema)</string>
+    <string name="contact_add_from_book">Aggiungi dalla rubrica</string>
+    <string name="contact_add_manual">Aggiungi a mano</string>
+    <string name="pref_wake_on_power">Ignora il tasto di accensione</string>
+    <string name="pref_wake_on_power_hint">Se viene premuto il tasto di accensione, lo schermo si riaccende da solo. Tenendolo premuto si può comunque spegnere il telefono.</string>
 </resources>

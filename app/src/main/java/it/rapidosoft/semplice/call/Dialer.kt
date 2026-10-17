@@ -1,6 +1,7 @@
 package it.rapidosoft.semplice.call
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.role.RoleManager
 import android.content.Context
 import android.content.pm.PackageManager
@@ -40,6 +41,7 @@ object Dialer {
      * Disattiva l'avviso di chiamata presso l'operatore (codice MMI #43#): così è la rete
      * stessa a dare occupato. L'app rifiuta comunque la seconda chiamata anche senza.
      */
+    @SuppressLint("MissingPermission") // consentito all'app Telefono predefinita, senza MODIFY_PHONE_STATE
     fun disableCallWaiting(context: Context) {
         val tm = context.getSystemService(TelecomManager::class.java)
         val ok = runCatching { tm.handleMmi("#43#") }.getOrDefault(false)

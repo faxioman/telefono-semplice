@@ -88,4 +88,13 @@
     <string name="section_theme">Оформление</string>
     <string name="theme_light">Светлое</string>
     <string name="theme_dark">Тёмное</string>
+    <string name="section_screen">Экран</string>
+    <string name="pref_keep_awake">Никогда не засыпать</string>
+    <string name="pref_keep_awake_hint">Экран всегда включён. Лучше держать телефон на зарядке.</string>
+    <string name="brightness_title">Яркость</string>
+    <string name="brightness_auto">Автояркость (системная)</string>
+    <string name="contact_add_from_book">Добавить из телефонной книги</string>
+    <string name="contact_add_manual">Добавить вручную</string>
+    <string name="pref_wake_on_power">Игнорировать кнопку питания</string>
+    <string name="pref_wake_on_power_hint">Если нажать кнопку питания, экран сам включится снова. Долгим нажатием телефон по-прежнему можно выключить.</string>
 </resources>

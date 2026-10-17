@@ -88,4 +88,13 @@
     <string name="section_theme">Aparência</string>
     <string name="theme_light">Claro</string>
     <string name="theme_dark">Escuro</string>
+    <string name="section_screen">Ecrã</string>
+    <string name="pref_keep_awake">Nunca entrar em espera</string>
+    <string name="pref_keep_awake_hint">O ecrã fica sempre ligado. É melhor manter o telefone a carregar.</string>
+    <string name="brightness_title">Brilho</string>
+    <string name="brightness_auto">Brilho automático (do sistema)</string>
+    <string name="contact_add_from_book">Adicionar da agenda</string>
+    <string name="contact_add_manual">Adicionar manualmente</string>
+    <string name="pref_wake_on_power">Ignorar o botão de ligar</string>
+    <string name="pref_wake_on_power_hint">Se o botão de ligar for premido, o ecrã volta a acender-se sozinho. Mantendo-o premido continua a ser possível desligar o telefone.</string>
 </resources>

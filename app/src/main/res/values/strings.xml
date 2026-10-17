@@ -88,4 +88,13 @@
     <string name="section_theme">Appearance</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
+    <string name="section_screen">Screen</string>
+    <string name="pref_keep_awake">Never go to sleep</string>
+    <string name="pref_keep_awake_hint">The screen stays on all the time. Best to keep the phone on the charger.</string>
+    <string name="brightness_title">Brightness</string>
+    <string name="brightness_auto">Automatic brightness (system)</string>
+    <string name="contact_add_from_book">Add from address book</string>
+    <string name="contact_add_manual">Add manually</string>
+    <string name="pref_wake_on_power">Ignore the power button</string>
+    <string name="pref_wake_on_power_hint">If the power button is pressed, the screen turns back on by itself. Holding the button still turns the phone off.</string>
 </resources>

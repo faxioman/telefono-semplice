@@ -88,4 +88,13 @@
     <string name="section_theme">रूप</string>
     <string name="theme_light">हल्का</string>
     <string name="theme_dark">गहरा</string>
+    <string name="section_screen">स्क्रीन</string>
+    <string name="pref_keep_awake">कभी स्लीप मोड में न जाए</string>
+    <string name="pref_keep_awake_hint">स्क्रीन हमेशा चालू रहेगी। फ़ोन को चार्जर पर रखना बेहतर है।</string>
+    <string name="brightness_title">चमक</string>
+    <string name="brightness_auto">स्वचालित चमक (सिस्टम)</string>
+    <string name="contact_add_from_book">फ़ोन बुक से जोड़ें</string>
+    <string name="contact_add_manual">हाथ से जोड़ें</string>
+    <string name="pref_wake_on_power">पावर बटन को अनदेखा करें</string>
+    <string name="pref_wake_on_power_hint">पावर बटन दबाने पर स्क्रीन अपने-आप फिर चालू हो जाएगी। बटन देर तक दबाकर फ़ोन फिर भी बंद किया जा सकता है।</string>
 </resources>

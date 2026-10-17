@@ -88,4 +88,13 @@
     <string name="section_theme">المظهر</string>
     <string name="theme_light">فاتح</string>
     <string name="theme_dark">داكن</string>
+    <string name="section_screen">الشاشة</string>
+    <string name="pref_keep_awake">عدم الدخول في وضع السكون أبدًا</string>
+    <string name="pref_keep_awake_hint">تبقى الشاشة مضاءة دائمًا. يُفضّل إبقاء الهاتف على الشاحن.</string>
+    <string name="brightness_title">السطوع</string>
+    <string name="brightness_auto">سطوع تلقائي (النظام)</string>
+    <string name="contact_add_from_book">إضافة من دفتر العناوين</string>
+    <string name="contact_add_manual">إضافة يدويًا</string>
+    <string name="pref_wake_on_power">تجاهل زر التشغيل</string>
+    <string name="pref_wake_on_power_hint">عند الضغط على زر التشغيل تعود الشاشة للعمل تلقائيًا. يمكن إيقاف الهاتف بالضغط المطوّل على الزر.</string>
 </resources>

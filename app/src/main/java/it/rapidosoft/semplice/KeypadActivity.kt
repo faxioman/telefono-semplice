@@ -3,7 +3,7 @@ package it.rapidosoft.semplice
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
+import it.rapidosoft.semplice.ui.SempliceActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -46,10 +46,11 @@ import it.rapidosoft.semplice.ui.BigButton
 import it.rapidosoft.semplice.ui.Green
 import it.rapidosoft.semplice.ui.Ink
 import it.rapidosoft.semplice.ui.SempliceTheme
+import it.rapidosoft.semplice.ui.isLandscape
 import it.rapidosoft.semplice.ui.Tile
 
 /** Tastierone numerico. Riceve anche le richieste ACTION_DIAL di altre app. */
-class KeypadActivity : AppCompatActivity() {
+class KeypadActivity : SempliceActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -59,12 +60,12 @@ class KeypadActivity : AppCompatActivity() {
 }
 
 @Composable
-private fun KeypadScreen(initial: String, onBack: () -> Unit) {
+internal fun KeypadScreen(initial: String, onBack: () -> Unit) {
     val context = LocalContext.current
     var number by rememberSaveable { mutableStateOf(initial) }
     val rows = listOf(listOf("1", "2", "3"), listOf("4", "5", "6"), listOf("7", "8", "9"), listOf("*", "0", "#"))
 
-    Column(Modifier.fillMaxSize().safeDrawingPadding().padding(16.dp)) {
+    val display: @Composable () -> Unit = {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack, modifier = Modifier.size(64.dp)) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back), Modifier.size(40.dp), tint = Ink)
@@ -73,14 +74,13 @@ private fun KeypadScreen(initial: String, onBack: () -> Unit) {
                 number.ifEmpty { " " }, fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Ink,
                 textAlign = TextAlign.Center, maxLines = 1, modifier = Modifier.weight(1f),
             )
-            IconButton(
-                onClick = { number = number.dropLast(1) },
-                modifier = Modifier.size(64.dp),
-            ) {
+            IconButton(onClick = { number = number.dropLast(1) }, modifier = Modifier.size(64.dp)) {
                 Icon(Icons.AutoMirrored.Filled.Backspace, stringResource(R.string.keypad_delete), Modifier.size(40.dp), tint = Ink)
             }
         }
-        Column(Modifier.weight(1f).padding(vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+    }
+    val keys: @Composable (Modifier) -> Unit = { modifier ->
+        Column(modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
             rows.forEach { row ->
                 Row(Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     row.forEach { key ->
@@ -92,12 +92,30 @@ private fun KeypadScreen(initial: String, onBack: () -> Unit) {
                 }
             }
         }
+    }
+    val callButton: @Composable () -> Unit = {
         BigButton(
             text = stringResource(R.string.keypad_call),
             icon = Icons.Filled.Call,
             color = Green,
             modifier = Modifier.fillMaxWidth().height(130.dp),
         ) { Dialer.call(context, number) }
+    }
+
+    if (isLandscape()) {
+        Row(Modifier.fillMaxSize().safeDrawingPadding().padding(16.dp), horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+            Column(Modifier.weight(1f).fillMaxHeight(), verticalArrangement = Arrangement.SpaceBetween) {
+                display()
+                callButton()
+            }
+            keys(Modifier.weight(1.2f).fillMaxHeight())
+        }
+    } else {
+        Column(Modifier.fillMaxSize().safeDrawingPadding().padding(16.dp)) {
+            display()
+            keys(Modifier.weight(1f).padding(vertical = 12.dp))
+            callButton()
+        }
     }
 }
 

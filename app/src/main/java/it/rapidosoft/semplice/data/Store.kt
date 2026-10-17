@@ -32,6 +32,11 @@ data class Settings(
     val blacklist: List<String> = emptyList(),
     val whitelist: List<String> = emptyList(),
     val theme: ThemeMode = ThemeMode.LIGHT,
+    val keepAwake: Boolean = false,
+    /** Riaccende subito lo schermo se viene premuto il tasto di accensione. */
+    val wakeOnPower: Boolean = false,
+    /** 0.05–1 = luminosità fissa dell'app; negativo = quella di sistema. */
+    val brightness: Float = -1f,
 )
 
 /** Persistenza minimale su SharedPreferences (JSON). Unica istanza per processo. */
@@ -106,6 +111,9 @@ class Store private constructor(context: Context) {
             put("blacklist", JSONArray(s.blacklist))
             put("whitelist", JSONArray(s.whitelist))
             put("theme", s.theme.name)
+            put("keepAwake", s.keepAwake)
+            put("wakeOnPower", s.wakeOnPower)
+            put("brightness", s.brightness.toDouble())
         }.toString()).apply()
     }
 
@@ -145,6 +153,9 @@ class Store private constructor(context: Context) {
             blacklist = o.optJSONArray("blacklist").toStringList(),
             whitelist = o.optJSONArray("whitelist").toStringList(),
             theme = runCatching { ThemeMode.valueOf(o.optString("theme")) }.getOrDefault(ThemeMode.LIGHT),
+            keepAwake = o.optBoolean("keepAwake", false),
+            wakeOnPower = o.optBoolean("wakeOnPower", false),
+            brightness = o.optDouble("brightness", -1.0).toFloat(),
         )
     }.getOrDefault(Settings())
 
