@@ -50,7 +50,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Backspace
+import androidx.compose.material.icons.automirrored.filled.CallMissed
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Block
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.CallEnd
+import androidx.compose.material.icons.filled.PhoneDisabled
+import androidx.compose.material.icons.filled.Sms
 import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -81,6 +87,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -94,6 +101,10 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import it.rapidosoft.semplice.call.Dialer
 import it.rapidosoft.semplice.data.Contact
 import it.rapidosoft.semplice.data.FilterMode
+import it.rapidosoft.semplice.data.LogEntry
+import it.rapidosoft.semplice.data.LogType
+import it.rapidosoft.semplice.data.Sms
+import it.rapidosoft.semplice.data.SmsBox
 import it.rapidosoft.semplice.data.Photos
 import it.rapidosoft.semplice.data.Store
 import it.rapidosoft.semplice.ui.ContactPhoto
@@ -103,6 +114,10 @@ import it.rapidosoft.semplice.ui.Muted
 import it.rapidosoft.semplice.ui.Red
 import it.rapidosoft.semplice.ui.SempliceTheme
 import java.io.File
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 /** Preferenze per il familiare/caregiver, protette da codice PIN. */
 class SettingsActivity : AppCompatActivity() {
@@ -249,6 +264,13 @@ private fun MainSettings(onClose: () -> Unit, onEditContact: (String?) -> Unit, 
     }
     val roleLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { refresh++ }
     val permLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { refresh++ }
+    var smsDenied by remember { mutableStateOf(false) }
+    val smsPermLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { ok ->
+        smsDenied = !ok
+        refresh++
+    }
+    val log by store.log.collectAsState()
+    val sms = remember(refresh) { SmsBox.latest(context) }
 
     var addNumberTo by remember { mutableStateOf<String?>(null) } // "black" | "white"
     var confirmDelete by remember { mutableStateOf<Contact?>(null) }
@@ -262,6 +284,38 @@ private fun MainSettings(onClose: () -> Unit, onEditContact: (String?) -> Unit, 
             Text(stringResource(R.string.settings_title), fontSize = 26.sp, fontWeight = FontWeight.Bold)
         }
         LazyColumn(Modifier.fillMaxSize(), contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp, 0.dp, 16.dp, 32.dp)) {
+            /* --- chiamate perse --- */
+            section(R.string.section_log)
+            if (log.isEmpty()) item { Text(stringResource(R.string.log_empty), color = Muted) }
+            items(log.take(30), key = { "log-${it.time}-${it.number}" }) { e ->
+                LogRow(e, store.findContact(e.number)?.name) { Dialer.call(context, e.number) }
+            }
+            if (log.isNotEmpty()) item {
+                TextButton(onClick = { store.clearLog() }) { Text(stringResource(R.string.log_clear)) }
+            }
+
+            /* --- SMS --- */
+            section(R.string.section_sms)
+            item(key = "sms-$refresh") {
+                Button(onClick = { SmsBox.openApp(context) }, modifier = Modifier.fillMaxWidth()) {
+                    Icon(Icons.Filled.Sms, null); Spacer(Modifier.width(8.dp))
+                    Text(stringResource(R.string.sms_open_app), fontSize = 18.sp)
+                }
+                if (!SmsBox.canRead(context)) {
+                    OutlinedButton(
+                        onClick = { smsPermLauncher.launch(Manifest.permission.READ_SMS) },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) { Text(stringResource(R.string.sms_show_here)) }
+                    if (smsDenied) Text(stringResource(R.string.sms_unavailable), color = Muted, fontSize = 14.sp)
+                }
+            }
+            if (SmsBox.canRead(context)) {
+                if (sms.isEmpty()) item { Text(stringResource(R.string.sms_empty), color = Muted) }
+                items(sms, key = { "sms-${it.date}-${it.address}-$refresh" }) { m ->
+                    SmsRow(m, store.findContact(m.address)?.name) { SmsBox.openConversation(context, m.address) }
+                }
+            }
+
             /* --- configurazione --- */
             section(R.string.section_setup)
             item(key = "setup-$refresh") {
@@ -325,6 +379,10 @@ private fun MainSettings(onClose: () -> Unit, onEditContact: (String?) -> Unit, 
                         RadioButton(selected = settings.filterMode == mode, onClick = null)
                         Text(stringResource(label), fontSize = 17.sp, modifier = Modifier.padding(start = 8.dp))
                     }
+                }
+                Text(stringResource(R.string.busy_info), color = Muted, fontSize = 15.sp, modifier = Modifier.padding(top = 8.dp))
+                TextButton(onClick = { Dialer.disableCallWaiting(context) }) {
+                    Text(stringResource(R.string.busy_disable_waiting))
                 }
                 SwitchRow(stringResource(R.string.pref_block_hidden), settings.blockHidden || settings.filterMode == FilterMode.WHITELIST,
                     enabled = settings.filterMode != FilterMode.WHITELIST) { v ->
@@ -506,6 +564,53 @@ private fun LazyListScope.numberList(
             Text(n, fontSize = 18.sp, modifier = Modifier.weight(1f))
             IconButton(onClick = { onRemove(n) }) { Icon(Icons.Filled.Delete, stringResource(R.string.delete), tint = Red) }
         }
+    }
+}
+
+@Composable
+private fun formatTime(millis: Long): String {
+    val locale = LocalConfiguration.current.locales[0]
+    return Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault())
+        .format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(locale))
+}
+
+@Composable
+internal fun LogRow(e: LogEntry, contactName: String?, onCallBack: () -> Unit) {
+    val (icon, color, label) = when (e.type) {
+        LogType.MISSED -> Triple(Icons.AutoMirrored.Filled.CallMissed, Red, R.string.log_missed)
+        LogType.REJECTED -> Triple(Icons.Filled.CallEnd, Muted, R.string.log_rejected)
+        LogType.BLOCKED -> Triple(Icons.Filled.Block, Muted, R.string.log_blocked)
+        LogType.BUSY -> Triple(Icons.Filled.PhoneDisabled, Color(0xFFB26A00), R.string.log_busy)
+    }
+    Row(Modifier.fillMaxWidth().padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+        Icon(icon, null, tint = color, modifier = Modifier.size(28.dp))
+        Column(Modifier.weight(1f).padding(horizontal = 12.dp)) {
+            Text(
+                contactName ?: e.number.ifBlank { stringResource(R.string.call_hidden) },
+                fontSize = 18.sp, fontWeight = FontWeight.Bold, maxLines = 1,
+            )
+            Text(stringResource(label) + " · " + formatTime(e.time), color = Muted, fontSize = 14.sp)
+        }
+        if (e.number.any { it.isDigit() }) {
+            IconButton(onClick = onCallBack) { Icon(Icons.Filled.Call, stringResource(R.string.log_call_back), tint = Green) }
+        }
+    }
+}
+
+@Composable
+internal fun SmsRow(m: Sms, contactName: String?, onClick: () -> Unit) {
+    Column(
+        Modifier.fillMaxWidth().padding(vertical = 4.dp).clip(RoundedCornerShape(12.dp))
+            .background(Color.White).clickable(onClick = onClick).padding(12.dp),
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                contactName ?: m.address, fontSize = 17.sp, maxLines = 1,
+                fontWeight = if (m.read) FontWeight.Normal else FontWeight.Bold, modifier = Modifier.weight(1f),
+            )
+            Text(formatTime(m.date), color = Muted, fontSize = 13.sp)
+        }
+        Text(m.body, maxLines = 3, fontSize = 15.sp, color = Ink)
     }
 }
 

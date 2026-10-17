@@ -70,4 +70,19 @@
     <string name="section_other">其他</string>
     <string name="open_home_chooser">更改主屏幕应用（用于退出）</string>
     <string name="open_android_settings">打开 Android 设置</string>
+    <string name="section_log">未接和已拦截的来电</string>
+    <string name="log_missed">未接</string>
+    <string name="log_rejected">已挂断</string>
+    <string name="log_blocked">已拦截</string>
+    <string name="log_busy">占线（正在通话）</string>
+    <string name="log_empty">没有未接来电</string>
+    <string name="log_clear">清空列表</string>
+    <string name="log_call_back">回拨</string>
+    <string name="section_sms">短信</string>
+    <string name="sms_open_app">打开短信应用</string>
+    <string name="sms_show_here">在此显示最新短信</string>
+    <string name="sms_empty">没有短信</string>
+    <string name="sms_unavailable">此手机不允许读取短信，请使用短信应用。</string>
+    <string name="busy_info">通话中如有第二个来电，对方会听到占线。</string>
+    <string name="busy_disable_waiting">同时关闭运营商的呼叫等待（#43#）</string>
 </resources>

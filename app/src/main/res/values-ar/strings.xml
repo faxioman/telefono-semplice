@@ -70,4 +70,19 @@
     <string name="section_other">أخرى</string>
     <string name="open_home_chooser">تغيير تطبيق الشاشة الرئيسية (للخروج)</string>
     <string name="open_android_settings">فتح إعدادات أندرويد</string>
+    <string name="section_log">المكالمات الفائتة والمحظورة</string>
+    <string name="log_missed">فائتة</string>
+    <string name="log_rejected">مرفوضة</string>
+    <string name="log_blocked">محظورة</string>
+    <string name="log_busy">مشغول (كان في مكالمة)</string>
+    <string name="log_empty">لا توجد مكالمات فائتة</string>
+    <string name="log_clear">مسح القائمة</string>
+    <string name="log_call_back">معاودة الاتصال</string>
+    <string name="section_sms">الرسائل (SMS)</string>
+    <string name="sms_open_app">فتح تطبيق الرسائل</string>
+    <string name="sms_show_here">عرض آخر الرسائل هنا</string>
+    <string name="sms_empty">لا توجد رسائل</string>
+    <string name="sms_unavailable">هذا الهاتف لا يسمح بقراءة الرسائل. استخدم تطبيق الرسائل.</string>
+    <string name="busy_info">إذا وصلت مكالمة ثانية أثناء مكالمة، سيسمع المتصل نغمة انشغال.</string>
+    <string name="busy_disable_waiting">إيقاف خدمة انتظار المكالمات لدى المشغّل أيضًا (#43#)</string>
 </resources>

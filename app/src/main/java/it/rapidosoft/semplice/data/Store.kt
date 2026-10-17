@@ -17,6 +17,11 @@ data class Contact(
 
 enum class FilterMode { OFF, BLACKLIST, WHITELIST }
 
+/** MISSED: nessuno ha risposto · REJECTED: "Butta giù" · BLOCKED: liste · BUSY: era già al telefono */
+enum class LogType { MISSED, REJECTED, BLOCKED, BUSY }
+
+data class LogEntry(val number: String, val time: Long, val type: LogType)
+
 data class Settings(
     val pin: String = "",
     val showKeypad: Boolean = true,
@@ -35,6 +40,33 @@ class Store private constructor(context: Context) {
 
     private val _settings = MutableStateFlow(readSettings())
     val settings: StateFlow<Settings> = _settings
+
+    private val _log = MutableStateFlow(readLog())
+    /** Chiamate perse/bloccate/rifiutate, la più recente per prima. */
+    val log: StateFlow<List<LogEntry>> = _log
+
+    @Synchronized
+    fun addLog(number: String?, type: LogType) {
+        saveLog((listOf(LogEntry(number.orEmpty(), System.currentTimeMillis(), type)) + _log.value).take(MAX_LOG))
+    }
+
+    fun clearLog() = saveLog(emptyList())
+
+    private fun saveLog(list: List<LogEntry>) {
+        _log.value = list
+        val arr = JSONArray()
+        list.forEach { arr.put(JSONObject().put("n", it.number).put("t", it.time).put("k", it.type.name)) }
+        sp.edit().putString(KEY_LOG, arr.toString()).apply()
+    }
+
+    private fun readLog(): List<LogEntry> = runCatching {
+        val arr = JSONArray(sp.getString(KEY_LOG, "[]"))
+        (0 until arr.length()).mapNotNull { i ->
+            val o = arr.getJSONObject(i)
+            val type = runCatching { LogType.valueOf(o.getString("k")) }.getOrNull() ?: return@mapNotNull null
+            LogEntry(o.optString("n"), o.getLong("t"), type)
+        }
+    }.getOrDefault(emptyList())
 
     fun findContact(number: String?): Contact? =
         _contacts.value.firstOrNull { Numbers.same(it.number, number) }
@@ -117,6 +149,8 @@ class Store private constructor(context: Context) {
     companion object {
         private const val KEY_CONTACTS = "contacts"
         private const val KEY_SETTINGS = "settings"
+        private const val KEY_LOG = "call_log"
+        private const val MAX_LOG = 100
 
         @Volatile private var instance: Store? = null
 

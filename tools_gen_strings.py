@@ -184,6 +184,70 @@ T["zh"] = ["简易电话",
 "没有密码：任何人都可以打开设置", "语言", "系统语言",
 "其他", "更改主屏幕应用（用于退出）", "打开 Android 设置"]
 
+# --- v0.2: registro chiamate, SMS, occupato
+KEYS += """section_log log_missed log_rejected log_blocked log_busy log_empty log_clear log_call_back
+section_sms sms_open_app sms_show_here sms_empty sms_unavailable busy_info busy_disable_waiting""".split()
+T[""] += ["Missed and blocked calls", "Missed", "Hung up", "Blocked", "Busy (already on the phone)",
+"No missed calls", "Clear list", "Call back",
+"Messages (SMS)", "Open the Messages app", "Show the latest SMS here", "No SMS",
+"This phone does not allow reading SMS. Use the Messages app.",
+"If a second call arrives during a call, the caller gets a busy signal.",
+"Also disable call waiting with the carrier (#43#)"]
+T["it"] += ["Chiamate perse e bloccate", "Persa", "Buttata giù", "Bloccata", "Occupato (era già al telefono)",
+"Nessuna chiamata persa", "Svuota elenco", "Richiama",
+"Messaggi (SMS)", "Apri l'app Messaggi", "Mostra qui gli ultimi SMS", "Nessun SMS",
+"Questo telefono non permette di leggere gli SMS. Usa l'app Messaggi.",
+"Se arriva una seconda chiamata durante una telefonata, chi chiama trova occupato.",
+"Disattiva anche l'avviso di chiamata dell'operatore (#43#)"]
+T["es"] += ["Llamadas perdidas y bloqueadas", "Perdida", "Colgada", "Bloqueada", "Ocupado (ya estaba al teléfono)",
+"No hay llamadas perdidas", "Vaciar lista", "Devolver llamada",
+"Mensajes (SMS)", "Abrir la app de Mensajes", "Mostrar aquí los últimos SMS", "No hay SMS",
+"Este teléfono no permite leer los SMS. Usa la app de Mensajes.",
+"Si entra una segunda llamada durante una conversación, quien llama oirá ocupado.",
+"Desactivar también la llamada en espera del operador (#43#)"]
+T["fr"] += ["Appels manqués et bloqués", "Manqué", "Raccroché", "Bloqué", "Occupé (déjà au téléphone)",
+"Aucun appel manqué", "Vider la liste", "Rappeler",
+"Messages (SMS)", "Ouvrir l'application Messages", "Afficher ici les derniers SMS", "Aucun SMS",
+"Ce téléphone ne permet pas de lire les SMS. Utilisez l'application Messages.",
+"Si un deuxième appel arrive pendant une conversation, l'appelant entend occupé.",
+"Désactiver aussi le double appel chez l'opérateur (#43#)"]
+T["de"] += ["Verpasste und blockierte Anrufe", "Verpasst", "Aufgelegt", "Blockiert", "Besetzt (telefonierte bereits)",
+"Keine verpassten Anrufe", "Liste leeren", "Zurückrufen",
+"Nachrichten (SMS)", "Nachrichten-App öffnen", "Letzte SMS hier anzeigen", "Keine SMS",
+"Dieses Telefon erlaubt das Lesen von SMS nicht. Bitte die Nachrichten-App verwenden.",
+"Kommt während eines Gesprächs ein zweiter Anruf, hört der Anrufer besetzt.",
+"Auch Anklopfen beim Netzbetreiber ausschalten (#43#)"]
+T["pt"] += ["Chamadas perdidas e bloqueadas", "Perdida", "Desligada", "Bloqueada", "Ocupado (já estava ao telefone)",
+"Nenhuma chamada perdida", "Limpar lista", "Ligar de volta",
+"Mensagens (SMS)", "Abrir a app Mensagens", "Mostrar aqui as últimas SMS", "Nenhuma SMS",
+"Este telefone não permite ler as SMS. Use a app Mensagens.",
+"Se chegar uma segunda chamada durante uma conversa, quem liga ouve sinal de ocupado.",
+"Desativar também a chamada em espera do operador (#43#)"]
+T["ru"] += ["Пропущенные и заблокированные", "Пропущен", "Сброшен", "Заблокирован", "Занято (уже разговаривал)",
+"Нет пропущенных звонков", "Очистить список", "Перезвонить",
+"Сообщения (SMS)", "Открыть приложение «Сообщения»", "Показать здесь последние SMS", "Нет SMS",
+"Этот телефон не разрешает читать SMS. Используйте приложение «Сообщения».",
+"Если во время разговора поступит второй звонок, звонящий услышит «занято».",
+"Также отключить ожидание вызова у оператора (#43#)"]
+T["ar"] += ["المكالمات الفائتة والمحظورة", "فائتة", "مرفوضة", "محظورة", "مشغول (كان في مكالمة)",
+"لا توجد مكالمات فائتة", "مسح القائمة", "معاودة الاتصال",
+"الرسائل (SMS)", "فتح تطبيق الرسائل", "عرض آخر الرسائل هنا", "لا توجد رسائل",
+"هذا الهاتف لا يسمح بقراءة الرسائل. استخدم تطبيق الرسائل.",
+"إذا وصلت مكالمة ثانية أثناء مكالمة، سيسمع المتصل نغمة انشغال.",
+"إيقاف خدمة انتظار المكالمات لدى المشغّل أيضًا (#43#)"]
+T["hi"] += ["छूटी और ब्लॉक की गई कॉल", "छूटी", "काटी गई", "ब्लॉक", "व्यस्त (पहले से कॉल पर थे)",
+"कोई छूटी कॉल नहीं", "सूची साफ़ करें", "वापस कॉल करें",
+"संदेश (SMS)", "संदेश ऐप खोलें", "नवीनतम SMS यहाँ दिखाएँ", "कोई SMS नहीं",
+"यह फ़ोन SMS पढ़ने की अनुमति नहीं देता। संदेश ऐप का उपयोग करें।",
+"कॉल के दौरान दूसरी कॉल आने पर कॉल करने वाले को व्यस्त सुनाई देगा।",
+"ऑपरेटर की कॉल वेटिंग भी बंद करें (#43#)"]
+T["zh"] += ["未接和已拦截的来电", "未接", "已挂断", "已拦截", "占线（正在通话）",
+"没有未接来电", "清空列表", "回拨",
+"短信", "打开短信应用", "在此显示最新短信", "没有短信",
+"此手机不允许读取短信，请使用短信应用。",
+"通话中如有第二个来电，对方会听到占线。",
+"同时关闭运营商的呼叫等待（#43#）"]
+
 def esc(s):
     s = escape(s).replace("'", "\\'").replace('"', '\\"').replace("\n", "\\n")
     if s.startswith("@") or s.startswith("?"): s = "\\" + s

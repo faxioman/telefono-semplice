@@ -36,6 +36,16 @@ object Dialer {
         }
     }
 
+    /**
+     * Disattiva l'avviso di chiamata presso l'operatore (codice MMI #43#): così è la rete
+     * stessa a dare occupato. L'app rifiuta comunque la seconda chiamata anche senza.
+     */
+    fun disableCallWaiting(context: Context) {
+        val tm = context.getSystemService(TelecomManager::class.java)
+        val ok = runCatching { tm.handleMmi("#43#") }.getOrDefault(false)
+        if (!ok) Toast.makeText(context, R.string.call_failed, Toast.LENGTH_LONG).show()
+    }
+
     fun isDefaultDialer(context: Context) = roleHeld(context, RoleManager.ROLE_DIALER)
     fun isDefaultHome(context: Context) = roleHeld(context, RoleManager.ROLE_HOME)
 

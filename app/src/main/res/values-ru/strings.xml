@@ -70,4 +70,19 @@
     <string name="section_other">Прочее</string>
     <string name="open_home_chooser">Сменить главный экран (чтобы выйти)</string>
     <string name="open_android_settings">Открыть настройки Android</string>
+    <string name="section_log">Пропущенные и заблокированные</string>
+    <string name="log_missed">Пропущен</string>
+    <string name="log_rejected">Сброшен</string>
+    <string name="log_blocked">Заблокирован</string>
+    <string name="log_busy">Занято (уже разговаривал)</string>
+    <string name="log_empty">Нет пропущенных звонков</string>
+    <string name="log_clear">Очистить список</string>
+    <string name="log_call_back">Перезвонить</string>
+    <string name="section_sms">Сообщения (SMS)</string>
+    <string name="sms_open_app">Открыть приложение «Сообщения»</string>
+    <string name="sms_show_here">Показать здесь последние SMS</string>
+    <string name="sms_empty">Нет SMS</string>
+    <string name="sms_unavailable">Этот телефон не разрешает читать SMS. Используйте приложение «Сообщения».</string>
+    <string name="busy_info">Если во время разговора поступит второй звонок, звонящий услышит «занято».</string>
+    <string name="busy_disable_waiting">Также отключить ожидание вызова у оператора (#43#)</string>
 </resources>

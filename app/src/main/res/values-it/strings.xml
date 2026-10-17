@@ -70,4 +70,19 @@
     <string name="section_other">Altro</string>
     <string name="open_home_chooser">Cambia app Home (per uscire)</string>
     <string name="open_android_settings">Apri impostazioni di Android</string>
+    <string name="section_log">Chiamate perse e bloccate</string>
+    <string name="log_missed">Persa</string>
+    <string name="log_rejected">Buttata giù</string>
+    <string name="log_blocked">Bloccata</string>
+    <string name="log_busy">Occupato (era già al telefono)</string>
+    <string name="log_empty">Nessuna chiamata persa</string>
+    <string name="log_clear">Svuota elenco</string>
+    <string name="log_call_back">Richiama</string>
+    <string name="section_sms">Messaggi (SMS)</string>
+    <string name="sms_open_app">Apri l\'app Messaggi</string>
+    <string name="sms_show_here">Mostra qui gli ultimi SMS</string>
+    <string name="sms_empty">Nessun SMS</string>
+    <string name="sms_unavailable">Questo telefono non permette di leggere gli SMS. Usa l\'app Messaggi.</string>
+    <string name="busy_info">Se arriva una seconda chiamata durante una telefonata, chi chiama trova occupato.</string>
+    <string name="busy_disable_waiting">Disattiva anche l\'avviso di chiamata dell\'operatore (#43#)</string>
 </resources>

@@ -70,4 +70,19 @@
     <string name="section_other">अन्य</string>
     <string name="open_home_chooser">होम ऐप बदलें (बाहर निकलने के लिए)</string>
     <string name="open_android_settings">Android सेटिंग खोलें</string>
+    <string name="section_log">छूटी और ब्लॉक की गई कॉल</string>
+    <string name="log_missed">छूटी</string>
+    <string name="log_rejected">काटी गई</string>
+    <string name="log_blocked">ब्लॉक</string>
+    <string name="log_busy">व्यस्त (पहले से कॉल पर थे)</string>
+    <string name="log_empty">कोई छूटी कॉल नहीं</string>
+    <string name="log_clear">सूची साफ़ करें</string>
+    <string name="log_call_back">वापस कॉल करें</string>
+    <string name="section_sms">संदेश (SMS)</string>
+    <string name="sms_open_app">संदेश ऐप खोलें</string>
+    <string name="sms_show_here">नवीनतम SMS यहाँ दिखाएँ</string>
+    <string name="sms_empty">कोई SMS नहीं</string>
+    <string name="sms_unavailable">यह फ़ोन SMS पढ़ने की अनुमति नहीं देता। संदेश ऐप का उपयोग करें।</string>
+    <string name="busy_info">कॉल के दौरान दूसरी कॉल आने पर कॉल करने वाले को व्यस्त सुनाई देगा।</string>
+    <string name="busy_disable_waiting">ऑपरेटर की कॉल वेटिंग भी बंद करें (#43#)</string>
 </resources>

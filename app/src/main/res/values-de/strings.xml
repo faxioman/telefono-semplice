@@ -70,4 +70,19 @@
     <string name="section_other">Sonstiges</string>
     <string name="open_home_chooser">Start-App wechseln (zum Verlassen)</string>
     <string name="open_android_settings">Android-Einstellungen öffnen</string>
+    <string name="section_log">Verpasste und blockierte Anrufe</string>
+    <string name="log_missed">Verpasst</string>
+    <string name="log_rejected">Aufgelegt</string>
+    <string name="log_blocked">Blockiert</string>
+    <string name="log_busy">Besetzt (telefonierte bereits)</string>
+    <string name="log_empty">Keine verpassten Anrufe</string>
+    <string name="log_clear">Liste leeren</string>
+    <string name="log_call_back">Zurückrufen</string>
+    <string name="section_sms">Nachrichten (SMS)</string>
+    <string name="sms_open_app">Nachrichten-App öffnen</string>
+    <string name="sms_show_here">Letzte SMS hier anzeigen</string>
+    <string name="sms_empty">Keine SMS</string>
+    <string name="sms_unavailable">Dieses Telefon erlaubt das Lesen von SMS nicht. Bitte die Nachrichten-App verwenden.</string>
+    <string name="busy_info">Kommt während eines Gesprächs ein zweiter Anruf, hört der Anrufer besetzt.</string>
+    <string name="busy_disable_waiting">Auch Anklopfen beim Netzbetreiber ausschalten (#43#)</string>
 </resources>

@@ -70,4 +70,19 @@
     <string name="section_other">Autre</string>
     <string name="open_home_chooser">Changer d\'application d\'accueil (pour quitter)</string>
     <string name="open_android_settings">Ouvrir les réglages Android</string>
+    <string name="section_log">Appels manqués et bloqués</string>
+    <string name="log_missed">Manqué</string>
+    <string name="log_rejected">Raccroché</string>
+    <string name="log_blocked">Bloqué</string>
+    <string name="log_busy">Occupé (déjà au téléphone)</string>
+    <string name="log_empty">Aucun appel manqué</string>
+    <string name="log_clear">Vider la liste</string>
+    <string name="log_call_back">Rappeler</string>
+    <string name="section_sms">Messages (SMS)</string>
+    <string name="sms_open_app">Ouvrir l\'application Messages</string>
+    <string name="sms_show_here">Afficher ici les derniers SMS</string>
+    <string name="sms_empty">Aucun SMS</string>
+    <string name="sms_unavailable">Ce téléphone ne permet pas de lire les SMS. Utilisez l\'application Messages.</string>
+    <string name="busy_info">Si un deuxième appel arrive pendant une conversation, l\'appelant entend occupé.</string>
+    <string name="busy_disable_waiting">Désactiver aussi le double appel chez l\'opérateur (#43#)</string>
 </resources>

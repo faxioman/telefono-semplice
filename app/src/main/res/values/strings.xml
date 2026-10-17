@@ -70,4 +70,19 @@
     <string name="section_other">Other</string>
     <string name="open_home_chooser">Change home app (to exit)</string>
     <string name="open_android_settings">Open Android settings</string>
+    <string name="section_log">Missed and blocked calls</string>
+    <string name="log_missed">Missed</string>
+    <string name="log_rejected">Hung up</string>
+    <string name="log_blocked">Blocked</string>
+    <string name="log_busy">Busy (already on the phone)</string>
+    <string name="log_empty">No missed calls</string>
+    <string name="log_clear">Clear list</string>
+    <string name="log_call_back">Call back</string>
+    <string name="section_sms">Messages (SMS)</string>
+    <string name="sms_open_app">Open the Messages app</string>
+    <string name="sms_show_here">Show the latest SMS here</string>
+    <string name="sms_empty">No SMS</string>
+    <string name="sms_unavailable">This phone does not allow reading SMS. Use the Messages app.</string>
+    <string name="busy_info">If a second call arrives during a call, the caller gets a busy signal.</string>
+    <string name="busy_disable_waiting">Also disable call waiting with the carrier (#43#)</string>
 </resources>

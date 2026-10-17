@@ -5,21 +5,34 @@ import android.os.Handler
 import android.os.Looper
 import android.telecom.Call
 import android.telecom.CallAudioState
+import android.telecom.DisconnectCause
 import android.telecom.InCallService
 import it.rapidosoft.semplice.CallActivity
 import it.rapidosoft.semplice.data.CallFilter
+import it.rapidosoft.semplice.data.LogType
+import it.rapidosoft.semplice.data.Store
 
 /** Il sistema si collega a questo servizio perché siamo l'app Telefono predefinita. */
 class PhoneInCallService : InCallService() {
     private val handler = Handler(Looper.getMainLooper())
+    private val incomingCalls = mutableSetOf<Call>()
+    private val answeredCalls = mutableSetOf<Call>()
 
     override fun onCallAdded(call: Call) {
         CallManager.service = this
         val incoming = call.stateCompat == Call.STATE_RINGING
-        // Rete di sicurezza: normalmente il blocco avviene già in ScreeningService.
-        if (incoming && CallFilter.shouldBlock(this, call.number)) {
-            call.reject(false, null)
-            return
+        if (incoming) {
+            // Già al telefono: la seconda chiamata trova occupato.
+            if (CallManager.state.value.isBusy) {
+                rejectAndLog(call, LogType.BUSY)
+                return
+            }
+            // Rete di sicurezza: normalmente il blocco avviene già in ScreeningService.
+            if (CallFilter.shouldBlock(this, call.number)) {
+                rejectAndLog(call, LogType.BLOCKED)
+                return
+            }
+            incomingCalls.add(call)
         }
         CallManager.add(call)
         if (incoming) IncomingCallNotification.show(this, call)
@@ -27,7 +40,20 @@ class PhoneInCallService : InCallService() {
         CallManager.enforceSpeaker()
     }
 
+    private fun rejectAndLog(call: Call, type: LogType) {
+        Store.get(this).addLog(call.number, type)
+        call.reject(false, null)
+    }
+
     override fun onCallRemoved(call: Call) {
+        if (incomingCalls.remove(call) && call !in answeredCalls) {
+            val cause = call.details.disconnectCause?.code
+            Store.get(this).addLog(
+                call.number,
+                if (cause == DisconnectCause.REJECTED) LogType.REJECTED else LogType.MISSED,
+            )
+        }
+        answeredCalls.remove(call)
         CallManager.remove(call)
         if (CallManager.state.value.ringing == null) IncomingCallNotification.cancel(this)
     }
@@ -38,6 +64,7 @@ class PhoneInCallService : InCallService() {
     }
 
     fun onCallStateChanged(call: Call) {
+        if (call.stateCompat == Call.STATE_ACTIVE) answeredCalls.add(call)
         if (call.stateCompat != Call.STATE_RINGING && CallManager.state.value.ringing == null) {
             IncomingCallNotification.cancel(this)
         }

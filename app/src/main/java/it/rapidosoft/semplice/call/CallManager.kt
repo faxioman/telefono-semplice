@@ -22,6 +22,8 @@ data class CallsSnapshot(val calls: List<Call> = emptyList(), val version: Int =
             ?: calls.firstOrNull { it.stateCompat == Call.STATE_ACTIVE }
             ?: calls.firstOrNull { it.stateCompat != Call.STATE_DISCONNECTED }
             ?: calls.firstOrNull()
+    /** C'è già una chiamata (anche solo in squillo): un'altra in arrivo trova occupato. */
+    val isBusy: Boolean get() = calls.any { it.stateCompat != Call.STATE_DISCONNECTED }
     val hasLiveCall: Boolean
         get() = calls.any {
             it.stateCompat in setOf(
