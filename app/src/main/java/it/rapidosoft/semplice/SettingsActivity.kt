@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.provider.ContactsContract
 import android.provider.Settings as AndroidSettings
 import androidx.activity.compose.BackHandler
@@ -86,7 +87,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -130,6 +133,7 @@ import it.rapidosoft.semplice.ui.Accent
 import it.rapidosoft.semplice.ui.Amber
 import it.rapidosoft.semplice.ui.Tile
 import java.io.File
+import kotlinx.coroutines.delay
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -169,6 +173,8 @@ private fun SettingsRoot(unlockedBefore: Boolean, onClose: () -> Unit, onUnlock:
             onBack = onClose,
             validate = { it == pin },
             errorText = stringResource(R.string.pin_wrong),
+            // aperta per sbaglio dall'anziano: dopo 5 s senza tocchi si torna alla Home
+            idleTimeoutMs = 5_000,
         ) { unlocked = true }
     }
 }
@@ -179,11 +185,20 @@ internal fun PinPad(
     onBack: () -> Unit,
     validate: (String) -> Boolean,
     errorText: String,
+    idleTimeoutMs: Long? = null,
     onOk: (String) -> Unit,
 ) {
     var entered by remember { mutableStateOf("") }
     var error by remember { mutableStateOf(false) }
+    var lastTouch by remember { mutableLongStateOf(0L) }
     BackHandler(onBack = onBack)
+    if (idleTimeoutMs != null) {
+        // Il conto alla rovescia riparte a ogni tasto premuto.
+        LaunchedEffect(lastTouch) {
+            delay(idleTimeoutMs)
+            onBack()
+        }
+    }
     val header: @Composable () -> Unit = {
         Text(title, fontSize = 24.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
         Text(
@@ -203,6 +218,7 @@ internal fun PinPad(
                                 .background(if (k == "OK") Green else Tile)
                                 .clickable {
                                     error = false
+                                    lastTouch = SystemClock.elapsedRealtime()
                                     when (k) {
                                         "⌫" -> entered = entered.dropLast(1)
                                         "OK" -> if (validate(entered)) onOk(entered) else {
