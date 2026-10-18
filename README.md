@@ -20,7 +20,7 @@ App Android pensata per persone anziane con demenza: **sostituisce sia la scherm
 | Lista nera / lista bianca | `ScreeningService` (`CallScreeningService`) rifiuta la chiamata prima che squilli. Il controllo viene ripetuto in `PhoneInCallService` come rete di sicurezza. Modalità: accetta tutte · blocca lista nera · solo contatti + lista bianca. Opzione per bloccare i numeri privati. I numeri delle liste si possono prendere dalla rubrica |
 | Tastierone | `KeypadActivity`, disattivabile dalle preferenze. Gestisce anche `ACTION_DIAL` (requisito per essere app Telefono predefinita) |
 | Preferenze protette | Ingranaggio semitrasparente in basso a destra. PIN da 4–8 cifre (all'inizio nessun PIN: va impostato) |
-| Chiamata in arrivo | Foto a tutto schermo, nome grande, bottoni **Butta giù** / **Rispondi**. Funziona anche a schermo bloccato grazie a una notifica full-screen `CallStyle` |
+| Chiamata in arrivo | Foto a tutto schermo, nome grande, bottoni **Butta giù** / **Rispondi**; si risponde anche toccando la foto. Funziona anche a schermo bloccato grazie a una notifica full-screen `CallStyle` |
 | Schermo | Opzioni "non andare mai in standby" e luminosità dell'app (fissa o di sistema). La barra di navigazione di Android è sempre nascosta |
 | Tasto di accensione | Opzione "ignora il tasto di accensione": il tasto non si può intercettare, quindi lo schermo viene riacceso subito sulla Home. La pressione lunga spegne ancora il telefono |
 | Verticale e orizzontale | In orizzontale la chiamata mostra la foto a sinistra e i bottoni a destra; nella Home il numero di colonne si adatta per avere le foto più grandi possibili senza scorrere |

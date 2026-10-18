@@ -16,8 +16,8 @@ android {
         applicationId = "it.rapidosoft.semplice"
         minSdk = 29
         targetSdk = 36
-        versionCode = 9
-        versionName = "0.7.0"
+        versionCode = 10
+        versionName = "0.7.1"
     }
 
     // Chiave di firma (anche per il Play Store): mai nel repo, arriva da variabili

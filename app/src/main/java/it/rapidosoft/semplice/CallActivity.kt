@@ -9,6 +9,9 @@ import androidx.activity.addCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import it.rapidosoft.semplice.ui.SempliceActivity
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -224,10 +227,17 @@ internal fun CallContent(
         }
     }
 
+    // Mentre squilla, anche toccare la foto grande risponde.
+    val answerByPhoto = if (mode == CallMode.RINGING) {
+        Modifier.clip(RoundedCornerShape(32.dp)).clickable(onClick = onAnswer)
+    } else {
+        Modifier
+    }
+
     if (isLandscape()) {
         // Orizzontale: foto a sinistra, stato/nome/bottoni a destra.
         Row(Modifier.fillMaxSize().safeDrawingPadding().padding(16.dp), horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-            ContactPhoto(photo, name, Modifier.weight(1f).fillMaxHeight(), corner = 32.dp)
+            ContactPhoto(photo, name, Modifier.weight(1f).fillMaxHeight().then(answerByPhoto), corner = 32.dp)
             Column(
                 Modifier.weight(1f).fillMaxHeight(),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -244,7 +254,7 @@ internal fun CallContent(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             statusText()
-            ContactPhoto(photo, name, Modifier.weight(1f).fillMaxWidth().padding(vertical = 12.dp), corner = 32.dp)
+            ContactPhoto(photo, name, Modifier.weight(1f).fillMaxWidth().padding(vertical = 12.dp).then(answerByPhoto), corner = 32.dp)
             nameText()
             buttons(Modifier.padding(top = 16.dp).height(150.dp))
         }
