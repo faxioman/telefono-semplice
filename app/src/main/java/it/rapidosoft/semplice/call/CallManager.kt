@@ -38,6 +38,9 @@ object CallManager {
     val state: StateFlow<CallsSnapshot> = _state
 
     var service: PhoneInCallService? = null
+
+    /** Chiamate in arrivo con risposta automatica programmata → istante (elapsedRealtime). */
+    val autoAnswerAt = mutableMapOf<Call, Long>()
     private var lastSpeakerRequest = 0L
 
     private val callback = object : Call.Callback() {
@@ -56,6 +59,7 @@ object CallManager {
 
     fun remove(call: Call) {
         call.unregisterCallback(callback)
+        autoAnswerAt.remove(call)
         _state.value = CallsSnapshot(_state.value.calls - call, _state.value.version + 1)
     }
 

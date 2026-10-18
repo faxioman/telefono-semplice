@@ -324,6 +324,19 @@ T["ar"] += ["من دفتر العناوين", "ضبط الصورة", "اسحب �
 T["hi"] += ["फ़ोन बुक से", "फ़ोटो ठीक करें", "फ़ोटो खिसकाने के लिए खींचें, बड़ा या छोटा करने के लिए दो उँगलियों से पिंच करें।", "यह फ़ोटो लगाएँ"]
 T["zh"] += ["从通讯录", "调整照片", "拖动以移动照片，用两根手指缩放。", "使用这张照片"]
 
+# --- v0.7: risposta automatica
+KEYS += ["auto_answer_title", "auto_answer_off", "auto_answer_only_contacts", "auto_answer_countdown"]
+T[""] += ["Auto-answer", "No", "Only for contacts", "Auto-answer in %1$d s"]
+T["it"] += ["Risposta automatica", "No", "Solo per i contatti", "Risposta automatica tra %1$d s"]
+T["es"] += ["Respuesta automática", "No", "Solo para contactos", "Respuesta automática en %1$d s"]
+T["fr"] += ["Réponse automatique", "Non", "Seulement pour les contacts", "Réponse automatique dans %1$d s"]
+T["de"] += ["Automatisch annehmen", "Nein", "Nur bei Kontakten", "Automatische Annahme in %1$d s"]
+T["pt"] += ["Atendimento automático", "Não", "Só para contactos", "Atendimento automático em %1$d s"]
+T["ru"] += ["Автоответ", "Нет", "Только для контактов", "Автоответ через %1$d с"]
+T["ar"] += ["الرد التلقائي", "لا", "لجهات الاتصال فقط", "رد تلقائي خلال %1$d ث"]
+T["hi"] += ["अपने-आप उठाना", "नहीं", "केवल संपर्कों के लिए", "%1$d सेकंड में अपने-आप उठेगा"]
+T["zh"] += ["自动接听", "关闭", "仅限联系人", "%1$d 秒后自动接听"]
+
 def esc(s):
     s = escape(s).replace("'", "\\'").replace('"', '\\"').replace("\n", "\\n")
     if s.startswith("@") or s.startswith("?"): s = "\\" + s

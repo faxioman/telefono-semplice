@@ -3,10 +3,12 @@ package it.rapidosoft.semplice.call
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.telecom.Call
 import android.telecom.CallAudioState
 import android.telecom.DisconnectCause
 import android.telecom.InCallService
+import android.telecom.VideoProfile
 import it.rapidosoft.semplice.CallActivity
 import it.rapidosoft.semplice.data.CallFilter
 import it.rapidosoft.semplice.data.LogType
@@ -34,6 +36,7 @@ class PhoneInCallService : InCallService() {
                 return
             }
             incomingCalls.add(call)
+            scheduleAutoAnswer(call)
         }
         CallManager.add(call)
         // Con l'app in primo piano basta aprire la schermata di chiamata. Altrimenti (telefono
@@ -41,6 +44,22 @@ class PhoneInCallService : InCallService() {
         if (incoming && !SempliceActivity.inForeground) IncomingCallNotification.show(this, call)
         runCatching { startActivity(CallActivity.intent(this)) }
         CallManager.enforceSpeaker()
+    }
+
+    /** Risposta automatica dopo N secondi di squillo, se attiva (di default solo per i contatti). */
+    private fun scheduleAutoAnswer(call: Call) {
+        val store = Store.get(this)
+        val s = store.settings.value
+        if (s.autoAnswerSeconds <= 0) return
+        if (s.autoAnswerOnlyContacts && store.findContact(call.number) == null) return
+        val delayMs = s.autoAnswerSeconds * 1000L
+        CallManager.autoAnswerAt[call] = SystemClock.elapsedRealtime() + delayMs
+        handler.postDelayed({
+            if (call.stateCompat == Call.STATE_RINGING) {
+                call.answer(VideoProfile.STATE_AUDIO_ONLY)
+                IncomingCallNotification.cancel(this)
+            }
+        }, delayMs)
     }
 
     private fun rejectAndLog(call: Call, type: LogType) {

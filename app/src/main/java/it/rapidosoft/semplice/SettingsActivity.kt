@@ -74,6 +74,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -437,6 +438,21 @@ private fun MainSettings(
             item {
                 SwitchRow(stringResource(R.string.pref_show_keypad), settings.showKeypad) { v ->
                     store.updateSettings { it.copy(showKeypad = v) }
+                }
+                Text(stringResource(R.string.auto_answer_title), fontWeight = FontWeight.Bold, fontSize = 18.sp, modifier = Modifier.padding(top = 12.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    listOf(0, 5, 10, 20, 30).forEach { sec ->
+                        FilterChip(
+                            selected = settings.autoAnswerSeconds == sec,
+                            onClick = { store.updateSettings { it.copy(autoAnswerSeconds = sec) } },
+                            label = { Text(if (sec == 0) stringResource(R.string.auto_answer_off) else "$sec s", fontSize = 16.sp) },
+                        )
+                    }
+                }
+                if (settings.autoAnswerSeconds > 0) {
+                    SwitchRow(stringResource(R.string.auto_answer_only_contacts), settings.autoAnswerOnlyContacts) { v ->
+                        store.updateSettings { it.copy(autoAnswerOnlyContacts = v) }
+                    }
                 }
                 Text(stringResource(R.string.filter_title), fontWeight = FontWeight.Bold, fontSize = 18.sp, modifier = Modifier.padding(top = 12.dp))
                 listOf(

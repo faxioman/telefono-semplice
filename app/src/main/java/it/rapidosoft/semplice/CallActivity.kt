@@ -134,6 +134,18 @@ private fun CallScreen(onFinished: () -> Unit) {
         }
     }
 
+    // Conto alla rovescia della risposta automatica, se programmata.
+    var secondsToAutoAnswer by remember { mutableStateOf<Int?>(null) }
+    LaunchedEffect(call, state) {
+        while (call != null && state == Call.STATE_RINGING) {
+            secondsToAutoAnswer = CallManager.autoAnswerAt[call]
+                ?.let { ((it - SystemClock.elapsedRealtime() + 999) / 1000).toInt().coerceAtLeast(0) }
+            delay(250)
+        }
+        secondsToAutoAnswer = null
+    }
+    val autoNote = secondsToAutoAnswer?.let { stringResource(R.string.auto_answer_countdown, it) }
+
     val status = when (state) {
         Call.STATE_RINGING -> stringResource(R.string.call_incoming)
         Call.STATE_DIALING, Call.STATE_CONNECTING, Call.STATE_NEW -> stringResource(R.string.call_dialing)
@@ -159,6 +171,7 @@ private fun CallScreen(onFinished: () -> Unit) {
         },
         onReject = { CallManager.reject() },
         onHangup = { CallManager.hangup(call) },
+        note = autoNote,
     )
 }
 
@@ -176,9 +189,13 @@ internal fun CallContent(
     onAnswer: () -> Unit,
     onReject: () -> Unit,
     onHangup: () -> Unit,
+    note: String? = null,
 ) {
     val statusText: @Composable () -> Unit = {
-        Text(status, fontSize = 30.sp, color = if (statusHighlighted) Accent else Muted, fontWeight = FontWeight.Bold)
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(status, fontSize = 30.sp, color = if (statusHighlighted) Accent else Muted, fontWeight = FontWeight.Bold)
+            if (note != null) Text(note, fontSize = 20.sp, color = Muted)
+        }
     }
     val nameText: @Composable () -> Unit = {
         Text(

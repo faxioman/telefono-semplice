@@ -102,4 +102,8 @@
     <string name="photo_adjust">ضبط الصورة</string>
     <string name="crop_hint">اسحب لتحريك الصورة، وباعد أو قرّب إصبعين للتكبير أو التصغير.</string>
     <string name="crop_use">استخدام هذه الصورة</string>
+    <string name="auto_answer_title">الرد التلقائي</string>
+    <string name="auto_answer_off">لا</string>
+    <string name="auto_answer_only_contacts">لجهات الاتصال فقط</string>
+    <string name="auto_answer_countdown">رد تلقائي خلال %1$d ث</string>
 </resources>

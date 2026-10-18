@@ -102,4 +102,8 @@
     <string name="photo_adjust">फ़ोटो ठीक करें</string>
     <string name="crop_hint">फ़ोटो खिसकाने के लिए खींचें, बड़ा या छोटा करने के लिए दो उँगलियों से पिंच करें।</string>
     <string name="crop_use">यह फ़ोटो लगाएँ</string>
+    <string name="auto_answer_title">अपने-आप उठाना</string>
+    <string name="auto_answer_off">नहीं</string>
+    <string name="auto_answer_only_contacts">केवल संपर्कों के लिए</string>
+    <string name="auto_answer_countdown">%1$d सेकंड में अपने-आप उठेगा</string>
 </resources>

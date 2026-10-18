@@ -102,4 +102,8 @@
     <string name="photo_adjust">Настроить фото</string>
     <string name="crop_hint">Перетащите, чтобы сдвинуть фото; сведите или разведите два пальца, чтобы изменить масштаб.</string>
     <string name="crop_use">Использовать это фото</string>
+    <string name="auto_answer_title">Автоответ</string>
+    <string name="auto_answer_off">Нет</string>
+    <string name="auto_answer_only_contacts">Только для контактов</string>
+    <string name="auto_answer_countdown">Автоответ через %1$d с</string>
 </resources>

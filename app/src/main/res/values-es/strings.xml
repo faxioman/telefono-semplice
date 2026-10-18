@@ -102,4 +102,8 @@
     <string name="photo_adjust">Ajustar la foto</string>
     <string name="crop_hint">Arrastra para mover la foto y pellizca con dos dedos para ampliar o reducir.</string>
     <string name="crop_use">Usar esta foto</string>
+    <string name="auto_answer_title">Respuesta automática</string>
+    <string name="auto_answer_off">No</string>
+    <string name="auto_answer_only_contacts">Solo para contactos</string>
+    <string name="auto_answer_countdown">Respuesta automática en %1$d s</string>
 </resources>

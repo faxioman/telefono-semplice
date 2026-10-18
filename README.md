@@ -28,6 +28,7 @@ App Android pensata per persone anziane con demenza: **sostituisce sia la scherm
 | Lingue | it, en, es, fr, de, pt, ru, ar, hi, zh. Si sceglie dalle preferenze, oppure segue la lingua del sistema |
 | Chiamate perse | Elenco nelle impostazioni (perse, buttate giù, bloccate, occupato) con tasto "Richiama". Lo tiene l'app, quindi non servono permessi |
 | SMS | Nelle impostazioni c'è un tasto per aprire l'app Messaggi ufficiale. Concedendo il permesso SMS, gli ultimi messaggi compaiono anche lì; toccandone uno si apre la conversazione |
+| Risposta automatica | Facoltativa, dopo 5, 10, 20 o 30 secondi di squillo, di default solo per i contatti. La schermata mostra il conto alla rovescia |
 | Seconda chiamata = occupato | Se è già al telefono, la nuova chiamata viene rifiutata e finisce nell'elenco. C'è anche un tasto per disattivare l'avviso di chiamata presso l'operatore (`#43#`), così l'occupato lo dà direttamente la rete |
 | È lei il telefono | Implementa `InCallService` con UI propria e chiede il ruolo `ROLE_DIALER` |
 

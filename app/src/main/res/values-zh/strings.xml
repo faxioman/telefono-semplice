@@ -102,4 +102,8 @@
     <string name="photo_adjust">调整照片</string>
     <string name="crop_hint">拖动以移动照片，用两根手指缩放。</string>
     <string name="crop_use">使用这张照片</string>
+    <string name="auto_answer_title">自动接听</string>
+    <string name="auto_answer_off">关闭</string>
+    <string name="auto_answer_only_contacts">仅限联系人</string>
+    <string name="auto_answer_countdown">%1$d 秒后自动接听</string>
 </resources>

@@ -35,6 +35,9 @@ data class Settings(
     val keepAwake: Boolean = false,
     /** Riaccende subito lo schermo se viene premuto il tasto di accensione. */
     val wakeOnPower: Boolean = false,
+    /** 0 = mai; altrimenti risponde da solo dopo questi secondi di squillo. */
+    val autoAnswerSeconds: Int = 0,
+    val autoAnswerOnlyContacts: Boolean = true,
     /** 0.05–1 = luminosità fissa dell'app; negativo = quella di sistema. */
     val brightness: Float = -1f,
 )
@@ -113,6 +116,8 @@ class Store private constructor(context: Context) {
             put("theme", s.theme.name)
             put("keepAwake", s.keepAwake)
             put("wakeOnPower", s.wakeOnPower)
+            put("autoAnswerSeconds", s.autoAnswerSeconds)
+            put("autoAnswerOnlyContacts", s.autoAnswerOnlyContacts)
             put("brightness", s.brightness.toDouble())
         }.toString()).apply()
     }
@@ -155,6 +160,8 @@ class Store private constructor(context: Context) {
             theme = runCatching { ThemeMode.valueOf(o.optString("theme")) }.getOrDefault(ThemeMode.LIGHT),
             keepAwake = o.optBoolean("keepAwake", false),
             wakeOnPower = o.optBoolean("wakeOnPower", false),
+            autoAnswerSeconds = o.optInt("autoAnswerSeconds", 0),
+            autoAnswerOnlyContacts = o.optBoolean("autoAnswerOnlyContacts", true),
             brightness = o.optDouble("brightness", -1.0).toFloat(),
         )
     }.getOrDefault(Settings())

@@ -42,7 +42,8 @@ class ScreenshotsTest {
 
     @Test fun incomingCall() = paparazzi.snapshot {
         SempliceTheme(dark = false) {
-            CallContent("Ti sta chiamando", true, "Giulia", null, CallMode.RINGING, null, {}, {}, {})
+            CallContent("Ti sta chiamando", true, "Giulia", null, CallMode.RINGING, null, {}, {}, {},
+                note = "Risposta automatica tra 7 s")
         }
     }
 
