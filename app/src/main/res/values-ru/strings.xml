@@ -106,4 +106,5 @@
     <string name="auto_answer_off">Нет</string>
     <string name="auto_answer_only_contacts">Только для контактов</string>
     <string name="auto_answer_countdown">Автоответ через %1$d с</string>
+    <string name="tip_thanks">Огромное спасибо! ☕</string>
 </resources>

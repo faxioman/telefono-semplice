@@ -18,6 +18,6 @@ POUR LA FAMILLE
 Les réglages se trouvent derrière une petite icône protégée par un code PIN : contacts et photos (aussi depuis le répertoire), appels manqués et bloqués avec le bouton « Rappeler », accès rapide aux messages, langue, thème et écran.
 
 CONFIDENTIALITÉ
-L'application n'utilise pas Internet, ne contient pas de publicité et ne collecte aucune donnée : contacts, photos et réglages restent sur le téléphone.
+L'application ne contient pas de publicité et ne collecte aucune donnée : contacts, photos et réglages restent sur le téléphone.
 
 Pour fonctionner, Téléphone Simple doit être défini comme application Téléphone par défaut et comme écran d'accueil : la configuration guidée se trouve dans les réglages.

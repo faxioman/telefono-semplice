@@ -18,6 +18,6 @@ PARA A FAMÍLIA
 As definições estão atrás de um pequeno ícone protegido por PIN: contactos e fotos (também da agenda), chamadas perdidas e bloqueadas com o botão «Ligar de volta», acesso rápido às mensagens, idioma, tema e ecrã.
 
 PRIVACIDADE
-A app não usa a Internet, não tem publicidade e não recolhe dados: contactos, fotos e definições ficam apenas no telefone.
+A app não tem publicidade e não recolhe dados: contactos, fotos e definições ficam apenas no telefone.
 
 Para funcionar, o Telefone Simples deve ser definido como app de telefone predefinida e como ecrã inicial: a configuração guiada está nas definições.

@@ -582,16 +582,8 @@ private fun MainSettings(
                     onClick = { context.startActivity(Intent(AndroidSettings.ACTION_SETTINGS)) },
                     modifier = Modifier.fillMaxWidth(),
                 ) { Text(stringResource(R.string.open_android_settings)) }
-                // Niente link a pagamenti esterni nella versione Play Store (policy di Google).
-                if (!BuildConfig.STORE_BUILD) Button(
-                    onClick = {
-                        runCatching {
-                            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://buymeacoffee.com/faxioman")))
-                        }
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFDD00), contentColor = Color.Black),
-                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-                ) { Text(stringResource(R.string.buy_coffee), fontSize = 18.sp, fontWeight = FontWeight.Bold) }
+                // Donazioni: link esterno nella versione GitHub, acquisti in-app in quella Play.
+                SupportSection()
                 Text(
                     "v" + BuildConfigVersion.name(context),
                     color = Muted, fontSize = 12.sp, modifier = Modifier.padding(top = 16.dp),

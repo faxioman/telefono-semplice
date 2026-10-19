@@ -18,6 +18,6 @@ PARA LA FAMILIA
 Los ajustes están detrás de un pequeño icono protegido con PIN: contactos y fotos (también desde la agenda), llamadas perdidas y bloqueadas con el botón «Devolver llamada», acceso rápido a los mensajes, idioma, tema y pantalla.
 
 PRIVACIDAD
-La app no usa Internet, no tiene publicidad y no recoge datos: contactos, fotos y ajustes se quedan solo en el teléfono.
+La app no tiene publicidad y no recoge datos: contactos, fotos y ajustes se quedan solo en el teléfono.
 
 Para funcionar, Teléfono Sencillo debe configurarse como app de teléfono predeterminada y como pantalla de inicio: la configuración guiada está en los ajustes.

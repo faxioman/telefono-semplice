@@ -106,4 +106,5 @@
     <string name="auto_answer_off">关闭</string>
     <string name="auto_answer_only_contacts">仅限联系人</string>
     <string name="auto_answer_countdown">%1$d 秒后自动接听</string>
+    <string name="tip_thanks">非常感谢！☕</string>
 </resources>

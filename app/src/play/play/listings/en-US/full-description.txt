@@ -18,6 +18,6 @@ FOR THE FAMILY
 All settings sit behind a small PIN-protected icon: contacts and photos (also from the address book), missed and blocked calls with a "Call back" button, quick access to messages, language, theme and screen.
 
 PRIVACY
-The app does not use the Internet, has no ads and collects no data: contacts, photos and settings stay on the phone.
+The app has no ads and collects no data: contacts, photos and settings stay on the phone.
 
 To work, Simple Phone must be set as the default phone app and as the home screen: the guided setup is in the settings.

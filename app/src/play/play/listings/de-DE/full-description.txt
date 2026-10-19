@@ -18,6 +18,6 @@ FÜR ANGEHÖRIGE
 Alle Einstellungen liegen hinter einem kleinen, per PIN geschützten Symbol: Kontakte und Fotos (auch aus dem Adressbuch), verpasste und blockierte Anrufe mit „Zurückrufen“-Taste, schneller Zugriff auf Nachrichten, Sprache, Design und Bildschirm.
 
 DATENSCHUTZ
-Die App nutzt kein Internet, enthält keine Werbung und sammelt keine Daten: Kontakte, Fotos und Einstellungen bleiben auf dem Telefon.
+Die App enthält keine Werbung und sammelt keine Daten: Kontakte, Fotos und Einstellungen bleiben auf dem Telefon.
 
 Damit alles funktioniert, muss Einfaches Telefon als Standard-Telefon-App und als Startbildschirm eingerichtet werden – die geführte Einrichtung ist in den Einstellungen.

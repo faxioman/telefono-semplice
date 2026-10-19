@@ -18,6 +18,6 @@ PER IL FAMILIARE
 Le impostazioni sono dietro una piccola icona protetta da codice PIN: contatti e foto (anche dalla rubrica), chiamate perse e bloccate con il tasto «Richiama», accesso rapido ai messaggi, lingua, tema e schermo.
 
 PRIVACY
-L'app non usa Internet, non ha pubblicità e non raccoglie dati: contatti, foto e impostazioni restano solo sul telefono.
+L'app non ha pubblicità e non raccoglie dati: contatti, foto e impostazioni restano solo sul telefono.
 
 Per funzionare, Telefono Semplice va impostata come app Telefono predefinita e come schermata Home: la configurazione guidata è nelle impostazioni.

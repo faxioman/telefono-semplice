@@ -337,6 +337,19 @@ T["ar"] += ["الرد التلقائي", "لا", "لجهات الاتصال فق
 T["hi"] += ["अपने-आप उठाना", "नहीं", "केवल संपर्कों के लिए", "%1$d सेकंड में अपने-आप उठेगा"]
 T["zh"] += ["自动接听", "关闭", "仅限联系人", "%1$d 秒后自动接听"]
 
+# --- v0.8: donazioni in-app
+KEYS += ["tip_thanks"]
+T[""] += ["Thank you so much! ☕"]
+T["it"] += ["Grazie di cuore! ☕"]
+T["es"] += ["¡Muchísimas gracias! ☕"]
+T["fr"] += ["Merci infiniment ! ☕"]
+T["de"] += ["Vielen herzlichen Dank! ☕"]
+T["pt"] += ["Muito obrigado! ☕"]
+T["ru"] += ["Огромное спасибо! ☕"]
+T["ar"] += ["شكرًا جزيلًا! ☕"]
+T["hi"] += ["दिल से धन्यवाद! ☕"]
+T["zh"] += ["非常感谢！☕"]
+
 def esc(s):
     s = escape(s).replace("'", "\\'").replace('"', '\\"').replace("\n", "\\n")
     if s.startswith("@") or s.startswith("?"): s = "\\" + s

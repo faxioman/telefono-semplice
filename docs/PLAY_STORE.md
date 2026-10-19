@@ -55,7 +55,7 @@ Il primo caricamento deve essere manuale: Google non lo consente via API.
 | Classificazione dei contenuti | Categoria: *Tutti gli altri tipi di app*. Tutte le risposte **No**, tranne *"Gli utenti possono interagire o scambiarsi contenuti"*: **Sì**, perché fa telefonate. Risultato atteso: PEGI 3 / Tutti |
 | Pubblico di destinazione | Solo **18 anni e oltre**: evita le regole per le app per bambini |
 | App di notizie | No |
-| Sicurezza dei dati | *"La tua app raccoglie o condivide dati utente?"* → **No**: tutto resta sul dispositivo e l'app non ha accesso a Internet |
+| Sicurezza dei dati | *"La tua app raccoglie o condivide dati utente?"* → **No**: tutto resta sul dispositivo; i pagamenti delle donazioni li gestisce Google Play |
 | App governativa | No |
 | Funzionalità finanziarie | Nessuna |
 | App per la salute | Nessuna funzionalità per la salute |
@@ -63,7 +63,21 @@ Il primo caricamento deve essere manuale: Google non lo consente via API.
 
 Non servono dichiarazioni per SMS e registro chiamate: la versione per il Play Store non usa quei permessi.
 
-## 5. Scheda dello store
+## 5. Donazioni (prodotti in-app)
+
+Serve un **profilo pagamenti** collegato all'account (*Impostazioni → Profilo pagamenti*: dati fiscali e IBAN).
+
+Poi **Monetizza → Prodotti → Prodotti in-app → Crea prodotto**, tre volte:
+
+| ID prodotto | Nome | Prezzo |
+|---|---|---|
+| `coffee_small` | Un caffè | 1,00 € |
+| `coffee_medium` | Caffè e brioche | 3,00 € |
+| `coffee_large` | Colazione al bar | 5,00 € |
+
+Gli ID devono essere esattamente questi. Finché i prodotti non esistono, l'app non mostra la sezione donazioni.
+
+## 6. Scheda dello store
 
 - **Categoria**: Comunicazione.
 - Titolo, descrizioni, icona, immagine in evidenza, screenshot, email (`play/contact-email.txt`) e sito (`play/contact-website.txt`) li carica il workflow. Prima di pubblicare controlla email e sito.
@@ -73,7 +87,7 @@ Non servono dichiarazioni per SMS e registro chiamate: la versione per il Play S
   python3 tools/copy_store_assets.py
   ```
 
-## 6. Pubblicare
+## 7. Pubblicare
 
 GitHub → **Actions → Play Store → Run workflow**:
 - **track**:

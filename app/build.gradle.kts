@@ -16,8 +16,8 @@ android {
         applicationId = "it.rapidosoft.semplice"
         minSdk = 29
         targetSdk = 36
-        versionCode = 10
-        versionName = "0.7.1"
+        versionCode = 11
+        versionName = "0.8.0"
     }
 
     // Chiave di firma (anche per il Play Store): mai nel repo, arriva da variabili
@@ -84,6 +84,9 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+
+    // Donazioni in-app, solo versione Play
+    "playImplementation"("com.android.billingclient:billing:9.1.0")
 
     testImplementation("junit:junit:4.13.2")
 }

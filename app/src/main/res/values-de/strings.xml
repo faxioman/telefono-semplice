@@ -106,4 +106,5 @@
     <string name="auto_answer_off">Nein</string>
     <string name="auto_answer_only_contacts">Nur bei Kontakten</string>
     <string name="auto_answer_countdown">Automatische Annahme in %1$d s</string>
+    <string name="tip_thanks">Vielen herzlichen Dank! ☕</string>
 </resources>
